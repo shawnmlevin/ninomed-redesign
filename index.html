@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NinoMed — Smart Patient Solutions That Work</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:#0B1F35; --navy-mid:#122840; --teal:#0899A8; --teal-lt:#0ABCCE; --teal-dk:#066475;
+      --white:#FFFFFF; --off-wh:#F2F6F8; --gray:#8A9BAB; --text:#1C2B3A; --border:#D6E3EC;
+      --font-display:'Fraunces',Georgia,serif; --font-body:'DM Sans',system-ui,sans-serif;
+      --ease:cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-body);color:var(--text);background:var(--white);overflow-x:hidden}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 64px;display:flex;align-items:center;justify-content:space-between;height:72px;background:transparent;transition:background .4s var(--ease),box-shadow .4s var(--ease)}
+    nav.scrolled{background:rgba(11,31,53,.97);backdrop-filter:blur(12px);box-shadow:0 1px 0 rgba(255,255,255,.06)}
+    .nav-logo img{height:34px;filter:brightness(0) invert(1)}
+    .nav-links{display:flex;gap:36px;list-style:none;align-items:center}
+    .nav-links a{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.7);text-decoration:none;transition:color .2s}
+    .nav-links a:hover{color:var(--white)}
+    .nav-cta{color:var(--white)!important;border:1px solid rgba(255,255,255,.35);padding:9px 22px;border-radius:2px;transition:background .2s,border-color .2s!important}
+    .nav-cta:hover{background:var(--teal)!important;border-color:var(--teal)!important}
+    .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+    .nav-hamburger span{width:24px;height:2px;background:white;display:block}
+    .mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;z-index:99;background:var(--navy);padding:24px 32px 32px;flex-direction:column;gap:20px}
+    .mobile-menu.open{display:flex}
+    .mobile-menu a{color:rgba(255,255,255,.8);text-decoration:none;font-size:15px;font-weight:500}
+
+    /* HERO */
+    .hero{min-height:100vh;background:var(--navy);display:grid;grid-template-columns:1.1fr .9fr;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(8,153,168,.18) 1px,transparent 1px);background-size:36px 36px;mask-image:radial-gradient(ellipse 80% 100% at 100% 50%,black 20%,transparent 70%);pointer-events:none}
+    .hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 20% 50%,rgba(8,153,168,.06),transparent 60%);pointer-events:none}
+    .hero-left{display:flex;flex-direction:column;justify-content:center;padding:140px 64px 80px 80px;position:relative;z-index:2}
+    .hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+    .hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--teal)}
+    .hero h1{font-family:var(--font-display);font-size:clamp(44px,5.5vw,76px);font-weight:300;line-height:1.08;color:var(--white);margin-bottom:28px}
+    .hero h1 em{font-style:italic;color:var(--teal-lt)}
+    .hero-desc{font-size:17px;line-height:1.75;color:rgba(255,255,255,.55);max-width:460px;margin-bottom:48px}
+    .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+    .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:var(--white);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:15px 32px;border-radius:2px;transition:background .25s var(--ease),transform .2s}
+    .btn-primary:hover{background:var(--teal-lt);transform:translateY(-1px)}
+    .btn-ghost{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.75);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:15px 32px;border-radius:2px;transition:border-color .25s,color .25s,transform .2s}
+    .btn-ghost:hover{border-color:var(--teal);color:var(--white);transform:translateY(-1px)}
+    .hero-right{display:flex;align-items:center;justify-content:center;padding:140px 80px 80px 40px;position:relative;z-index:2}
+    .hero-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;width:100%;max-width:400px}
+    .hero-stat-cell{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);padding:32px 28px;transition:background .3s,border-color .3s}
+    .hero-stat-cell:hover{background:rgba(8,153,168,.07);border-color:rgba(8,153,168,.25)}
+    .hero-stat-cell:first-child{border-radius:6px 0 0 0}
+    .hero-stat-cell:nth-child(2){border-radius:0 6px 0 0}
+    .hero-stat-cell:nth-child(3){border-radius:0 0 0 6px}
+    .hero-stat-cell:last-child{border-radius:0 0 6px 0}
+    .hero-stat-num{font-family:var(--font-display);font-size:40px;font-weight:300;color:var(--white);line-height:1;margin-bottom:8px}
+    .hero-stat-num span{color:var(--teal-lt)}
+    .hero-stat-label{font-size:13px;color:rgba(255,255,255,.5);line-height:1.4}
+    .hero-stat-sub{font-size:11px;color:rgba(255,255,255,.28);margin-top:4px}
+
+    /* COMMONS */
+    section{padding:100px 80px}
+    .section-label{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-bottom:16px}
+    .section-label::before{content:'';width:24px;height:1px;background:var(--teal)}
+    .section-title{font-family:var(--font-display);font-size:clamp(32px,3.5vw,48px);font-weight:300;line-height:1.15;color:var(--navy);margin-bottom:20px}
+    .section-title em{font-style:italic;color:var(--teal)}
+    .section-body{font-size:16px;line-height:1.75;color:#5A7080;max-width:560px}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+    .reveal.visible{opacity:1;transform:none}
+    .reveal-delay-1{transition-delay:.1s}
+    .reveal-delay-2{transition-delay:.2s}
+    .reveal-delay-3{transition-delay:.3s}
+
+    /* TRUST BAR */
+    .trust-bar{background:var(--off-wh);padding:28px 80px;display:flex;align-items:center;justify-content:center;gap:56px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+    .trust-item{display:flex;align-items:center;gap:12px}
+    .trust-icon{width:34px;height:34px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .trust-icon svg{width:15px;height:15px}
+    .trust-text{font-size:13px;font-weight:500;color:var(--navy);line-height:1.4}
+    .trust-sub{font-size:11px;color:var(--gray);display:block}
+
+    /* SOCIAL PROOF */
+    .social-proof{background:var(--white);padding:56px 80px;border-bottom:1px solid var(--border)}
+    .social-proof-label{text-align:center;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-bottom:36px}
+    .logos-row{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap}
+    .hospital-logo{opacity:.32;transition:opacity .25s;display:flex;align-items:center;color:var(--navy)}
+    .hospital-logo:hover{opacity:.6}
+    .hospital-logo svg{height:26px}
+
+    /* FEATURE */
+    .feature-section{background:var(--navy);padding:100px 80px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;overflow:hidden}
+    .feature-section::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(8,153,168,.1),transparent 70%);pointer-events:none}
+    .feature-left{position:relative;z-index:2}
+    .feature-left .section-label{color:var(--teal-lt)}
+    .feature-left .section-label::before{background:var(--teal-lt)}
+    .feature-left .section-title{color:var(--white)}
+    .feature-left .section-body{color:rgba(255,255,255,.55);max-width:500px}
+    .feature-list{list-style:none;margin:32px 0;display:grid;grid-template-columns:1fr 1fr;gap:12px 24px}
+    .feature-list li{font-size:14px;color:rgba(255,255,255,.7);display:flex;align-items:flex-start;gap:10px;line-height:1.5}
+    .feature-list li::before{content:'';width:5px;height:5px;background:var(--teal);border-radius:50%;margin-top:7px;flex-shrink:0}
+    .feature-img-wrap{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:48px;display:flex;align-items:center;justify-content:center}
+    .feature-img-wrap img{max-width:100%;max-height:380px;object-fit:contain;filter:drop-shadow(0 20px 60px rgba(8,153,168,.2));transition:transform .5s var(--ease)}
+    .feature-img-wrap:hover img{transform:scale(1.04)}
+    .feature-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+    .tag{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:2px;background:rgba(8,153,168,.15);color:var(--teal-lt);border:1px solid rgba(8,153,168,.25)}
+
+    /* PRODUCTS */
+    .products-section{background:var(--off-wh);padding:100px 80px}
+    .products-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;gap:24px}
+    .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
+    .product-card{background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:box-shadow .3s var(--ease),transform .3s var(--ease),border-color .3s;text-decoration:none;color:inherit;display:flex;flex-direction:column}
+    .product-card:hover{box-shadow:0 16px 48px rgba(11,31,53,.1);transform:translateY(-4px);border-color:var(--teal)}
+    .product-img{aspect-ratio:1;overflow:hidden;background:var(--off-wh);display:flex;align-items:center;justify-content:center;padding:32px}
+    .product-img img{width:100%;height:100%;object-fit:contain;transition:transform .4s var(--ease)}
+    .product-card:hover .product-img img{transform:scale(1.06)}
+    .product-info{padding:24px;flex:1;display:flex;flex-direction:column}
+    .product-name{font-family:var(--font-display);font-size:20px;font-weight:400;color:var(--navy);margin-bottom:8px}
+    .product-desc{font-size:13px;line-height:1.65;color:var(--gray);flex:1}
+    .product-link{margin-top:20px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:6px}
+    .product-link::after{content:'→';transition:transform .2s}
+    .product-card:hover .product-link::after{transform:translateX(4px)}
+
+    /* PNEUMOHUB */
+    .pneumohub-section{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;padding:100px 80px;background:var(--white)}
+    .pneumo-img{background:var(--off-wh);border-radius:8px;padding:56px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border)}
+    .pneumo-img img{max-width:100%;max-height:340px;object-fit:contain;filter:drop-shadow(0 12px 32px rgba(11,31,53,.12))}
+    .pneumo-features{margin-top:32px;display:flex;flex-direction:column;gap:14px}
+    .pneumo-feat{padding:16px 20px;border-left:2px solid var(--teal);background:var(--off-wh);border-radius:0 4px 4px 0}
+    .pneumo-feat-title{font-size:14px;font-weight:600;color:var(--navy)}
+    .pneumo-feat-desc{font-size:13px;color:var(--gray);line-height:1.5;margin-top:3px}
+
+    /* ANALYTICS */
+    .analytics-section{background:linear-gradient(135deg,var(--navy-mid),var(--navy));padding:100px 80px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .analytics-right .section-title{color:var(--white)}
+    .analytics-right .section-body{color:rgba(255,255,255,.55)}
+    .analytics-cards{display:flex;flex-direction:column;gap:14px;margin-top:32px}
+    .analytics-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:20px 24px;display:flex;align-items:flex-start;gap:16px}
+    .analytics-card-num{font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--teal-lt);line-height:1;min-width:48px}
+    .analytics-card-title{font-size:14px;font-weight:600;color:var(--white)}
+    .analytics-card-desc{font-size:13px;color:rgba(255,255,255,.5);line-height:1.5;margin-top:4px}
+    .mini-chart-wrap{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:32px}
+    .mini-chart-title{font-size:12px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:20px}
+    .mini-bar-chart{display:flex;align-items:flex-end;gap:8px;height:120px}
+    .mini-bar{flex:1;border-radius:3px 3px 0 0;background:rgba(8,153,168,.25);transition:background .3s;animation:barGrow 1.2s var(--ease) both}
+    .mini-bar.highlight{background:var(--teal)}
+    .mini-bar:hover{background:var(--teal-lt)!important}
+    @keyframes barGrow{from{transform:scaleY(0);transform-origin:bottom}to{transform:scaleY(1);transform-origin:bottom}}
+    .mini-bar:nth-child(1){animation-delay:.1s}.mini-bar:nth-child(2){animation-delay:.15s}.mini-bar:nth-child(3){animation-delay:.2s}.mini-bar:nth-child(4){animation-delay:.25s}.mini-bar:nth-child(5){animation-delay:.3s}.mini-bar:nth-child(6){animation-delay:.35s}
+    .mini-metrics{display:flex;gap:20px;margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08)}
+    .mini-metric-val{font-family:var(--font-display);font-size:24px;font-weight:300;color:var(--white)}
+    .mini-metric-label{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px}
+
+    /* TESTIMONIALS */
+    .testimonials-section{background:var(--off-wh);padding:100px 80px;text-align:center}
+    .testimonials-section .section-label{justify-content:center}
+    .testimonials-section .section-label::before{display:none}
+    .testimonials-section .section-title{text-align:center;margin:0 auto 60px}
+    .testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1100px;margin:0 auto}
+    .testimonial-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:36px;text-align:left;position:relative}
+    .testimonial-card::before{content:'\201C';font-family:var(--font-display);font-size:80px;line-height:.8;color:var(--teal);opacity:.18;position:absolute;top:24px;left:28px}
+    .testimonial-text{font-family:var(--font-display);font-size:16px;font-style:italic;line-height:1.75;color:var(--navy);padding-top:24px;margin-bottom:24px}
+    .testimonial-author{font-size:13px;font-weight:600;color:var(--teal)}
+    .testimonial-role{font-size:12px;color:var(--gray);margin-top:2px}
+
+    /* CONTACT */
+    .contact-section{background:var(--navy);padding:100px 80px}
+    .contact-inner{display:grid;grid-template-columns:1fr 1.2fr;gap:80px;align-items:flex-start}
+    .contact-left .section-title{color:var(--white)}
+    .contact-left .section-body{color:rgba(255,255,255,.55)}
+    .contact-info{margin-top:48px;display:flex;flex-direction:column;gap:24px}
+    .contact-item{display:flex;gap:16px;align-items:flex-start}
+    .contact-item-icon{width:40px;height:40px;flex-shrink:0;border:1px solid rgba(8,153,168,.3);border-radius:50%;display:flex;align-items:center;justify-content:center}
+    .contact-item-icon svg{width:16px;height:16px;stroke:var(--teal);fill:none;stroke-width:2}
+    .contact-item-label{font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:.08em}
+    .contact-item-val{font-size:14px;color:var(--white);margin-top:4px}
+    .contact-item-val a{color:inherit;text-decoration:none}
+    .contact-item-val a:hover{color:var(--teal-lt)}
+    .contact-form{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:40px}
+    .form-title{font-family:var(--font-display);font-size:24px;font-weight:300;color:var(--white);margin-bottom:28px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .form-group{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+    .form-group label{font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+    .form-group input,.form-group select,.form-group textarea{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:12px 16px;color:var(--white);font-family:var(--font-body);font-size:14px;outline:none;transition:border-color .2s;width:100%}
+    .form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,.22)}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--teal)}
+    .form-group select option{background:var(--navy)}
+    .form-group textarea{resize:vertical;min-height:100px}
+    .form-submit{width:100%;background:var(--teal);color:var(--white);border:none;cursor:pointer;font-family:var(--font-body);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:15px;border-radius:4px;margin-top:8px;transition:background .25s}
+    .form-submit:hover{background:var(--teal-lt)}
+
+    /* FOOTER */
+    footer{background:#060F1A;padding:60px 80px 40px}
+    .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+    .footer-logo img{height:30px;filter:brightness(0) invert(1);opacity:.6;margin-bottom:16px}
+    .footer-tagline{font-size:13px;color:rgba(255,255,255,.38);line-height:1.7;max-width:280px}
+    .footer-col-title{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:16px}
+    .footer-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .footer-links a{font-size:13px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
+    .footer-links a:hover{color:var(--teal-lt)}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:28px;display:flex;justify-content:space-between;align-items:center}
+    .footer-copy{font-size:12px;color:rgba(255,255,255,.28)}
+    .footer-catalog{font-size:12px;font-weight:600;color:var(--teal);text-decoration:none;letter-spacing:.06em}
+    .footer-catalog:hover{color:var(--teal-lt)}
+
+    /* RESPONSIVE */
+    @media(max-width:1024px){
+      section{padding:80px 40px}
+      .hero{grid-template-columns:1fr}
+      .hero-right{display:none}
+      .hero-left{padding:140px 40px 80px}
+      .feature-section,.pneumohub-section,.analytics-section,.contact-inner{grid-template-columns:1fr}
+      .footer-top{grid-template-columns:1fr 1fr}
+      .trust-bar{flex-wrap:wrap;gap:24px;padding:24px 40px}
+      nav{padding:0 24px}
+      .social-proof{padding:48px 40px}
+      .logos-row{gap:36px}
+    }
+    @media(max-width:768px){
+      .nav-links{display:none}
+      .nav-hamburger{display:flex}
+      section{padding:64px 24px}
+      .hero-left{padding:120px 24px 64px}
+      .testimonials-grid{grid-template-columns:1fr}
+      .form-row{grid-template-columns:1fr}
+      .footer-top{grid-template-columns:1fr}
+      footer{padding:48px 24px 32px}
+      .feature-list{grid-template-columns:1fr}
+      .contact-form{padding:24px 20px}
+      .trust-bar{padding:20px 24px}
+      .social-proof{padding:40px 24px}
+      .logos-row{gap:28px}
+      .products-header{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><img src="https://www.ninomed.com/wp-content/uploads/2020/11/logo-2020.png" alt="NinoMed"/></a>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#pneumohub">PneumoHub</a></li>
+    <li><a href="safe-t-net.html">Safe-T-Net</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#products" onclick="closeMenu()">Products</a>
+  <a href="#pneumohub" onclick="closeMenu()">PneumoHub</a>
+  <a href="safe-t-net.html" onclick="closeMenu()">Safe-T-Net</a>
+  <a href="about.html" onclick="closeMenu()">About</a>
+  <a href="#contact" onclick="closeMenu()">Contact Us</a>
+</div>
+
+<section class="hero" style="padding:0">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Advanced Surgical Solutions</div>
+    <h1>Smart patient<br>solutions that<br><em>work.</em></h1>
+    <p class="hero-desc">Precision-engineered positioning and analytics products trusted by surgeons at leading academic medical centers and health systems nationwide.</p>
+    <div class="hero-actions">
+      <a href="#products" class="btn-primary">Explore Products</a>
+      <a href="https://www.ninomed.com/wp-content/uploads/2025/06/NinoMed_2025_catalog_8.pdf" target="_blank" class="btn-ghost">2026 Catalog ↓</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stat-grid">
+      <div class="hero-stat-cell">
+        <div class="hero-stat-num">&lt;<span>1</span> min</div>
+        <div class="hero-stat-label">Setup time</div>
+        <div class="hero-stat-sub">Safe-T-Secure® in the OR</div>
+      </div>
+      <div class="hero-stat-cell">
+        <div class="hero-stat-num"><span>0</span></div>
+        <div class="hero-stat-label">Shoulder blocks needed</div>
+        <div class="hero-stat-sub">All-In-One integrated design</div>
+      </div>
+      <div class="hero-stat-cell">
+        <div class="hero-stat-num"><span>AORN</span></div>
+        <div class="hero-stat-label">Compliant</div>
+        <div class="hero-stat-sub">Patient positioning guidelines</div>
+      </div>
+      <div class="hero-stat-cell">
+        <div class="hero-stat-num"><span>120</span>-day</div>
+        <div class="hero-stat-label">Biodegradable</div>
+        <div class="hero-stat-sub">STS &amp; BodyPad products</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-bar">
+  <div class="trust-item"><div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="trust-text">AORN Compliant<span class="trust-sub">Positioning Guidelines</span></div></div>
+  <div class="trust-item"><div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="trust-text">100% Latex-Free<span class="trust-sub">All surgical products</span></div></div>
+  <div class="trust-item"><div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="trust-text">Sub-Minute Setup<span class="trust-sub">Less than 60 seconds</span></div></div>
+  <div class="trust-item"><div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div class="trust-text">Biodegradable<span class="trust-sub">120-day breakdown</span></div></div>
+  <div class="trust-item"><div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="trust-text">OR Team Proven<span class="trust-sub">Nationwide deployment</span></div></div>
+</div>
+
+<div class="social-proof reveal">
+  <div class="social-proof-label">Trusted at leading academic medical centers &amp; health systems</div>
+  <div class="logos-row">
+    <div class="hospital-logo"><svg viewBox="0 0 190 36" xmlns="http://www.w3.org/2000/svg"><text y="28" font-family="Georgia,serif" font-size="27" font-weight="700" fill="currentColor">Duke Health</text></svg></div>
+    <div class="hospital-logo"><svg viewBox="0 0 180 36" xmlns="http://www.w3.org/2000/svg"><text y="28" font-family="Georgia,serif" font-size="27" font-weight="700" fill="currentColor">UNC Health</text></svg></div>
+    <div class="hospital-logo"><svg viewBox="0 0 225 36" xmlns="http://www.w3.org/2000/svg"><text y="28" font-family="Georgia,serif" font-size="27" font-weight="700" fill="currentColor">Penn Medicine</text></svg></div>
+    <div class="hospital-logo"><svg viewBox="0 0 215 36" xmlns="http://www.w3.org/2000/svg"><text y="28" font-family="Georgia,serif" font-size="27" font-weight="700" fill="currentColor">NYU Langone</text></svg></div>
+    <div class="hospital-logo"><svg viewBox="0 0 280 36" xmlns="http://www.w3.org/2000/svg"><text y="28" font-family="Georgia,serif" font-size="23" font-weight="700" fill="currentColor">Mount Auburn Hospital</text></svg></div>
+  </div>
+</div>
+
+<section class="feature-section" id="safe-t-secure">
+  <div class="feature-left reveal">
+    <div class="section-label">Flagship Product</div>
+    <h2 class="section-title">Safe-T-Secure®<br><em>The Original</em> All-In-One</h2>
+    <p class="section-body">The definitive Trendelenburg patient positioning solution for robotic and laparoscopic surgery. Stabilizes patients in under one minute — no shoulder blocks, no tape, no hassle.</p>
+    <ul class="feature-list">
+      <li>One size fits all patients</li><li>Setup under 60 seconds</li>
+      <li>No shoulder blocks needed</li><li>No arm boards required</li>
+      <li>AORN-consistent design</li><li>High-BMI compatible</li>
+      <li>Perineal protective sheet</li><li>IV wire management foam</li>
+    </ul>
+    <div class="feature-tags">
+      <span class="tag">Gynecologic Surgery</span><span class="tag">GYN Oncology</span>
+      <span class="tag">Urologic Surgery</span><span class="tag">Colorectal</span><span class="tag">General Surgery</span>
+    </div>
+    <div style="margin-top:36px;display:flex;gap:14px;flex-wrap:wrap">
+      <a href="https://www.ninomed.com/safe-t-secure/" class="btn-primary" target="_blank">Product Details</a>
+      <a href="https://www.ninomed.com/wp-content/uploads/2025/05/STS_Brochure_2025-1.pdf" class="btn-ghost" target="_blank">Brochure ↓</a>
+    </div>
+  </div>
+  <div class="feature-right reveal reveal-delay-2">
+    <div class="feature-img-wrap">
+      <img src="https://www.ninomed.com/wp-content/uploads/2026/02/STS_new2026-300x300.webp" alt="Safe-T-Secure®"/>
+    </div>
+  </div>
+</section>
+
+<section class="products-section" id="products">
+  <div class="products-header">
+    <div>
+      <div class="section-label reveal">Patient Positioners</div>
+      <h2 class="section-title reveal">The complete<br><em>positioning</em> lineup</h2>
+    </div>
+    <a href="https://www.ninomed.com/positioning-devices/" class="btn-primary" target="_blank" style="white-space:nowrap;background:var(--navy)">View All →</a>
+  </div>
+  <div class="products-grid">
+    <a href="https://www.ninomed.com/sts-bodypad-xl-plus/" class="product-card reveal reveal-delay-1" target="_blank"><div class="product-img"><img src="https://www.ninomed.com/wp-content/uploads/2025/04/STS_BodyPad_XL_Plus3-300x300.webp" alt="" loading="lazy"/></div><div class="product-info"><div class="product-name">STS-BodyPad™ XL Plus</div><div class="product-desc">21" × 40" pad with integrated handles, Lift Sheet, Body Strap, Protective Foam, and Arm Protectors.</div><div class="product-link">Learn More</div></div></a>
+    <a href="https://www.ninomed.com/sts-flex/" class="product-card reveal reveal-delay-2" target="_blank"><div class="product-img"><img src="https://www.ninomed.com/wp-content/uploads/2025/04/STS_BodyPad_XL_2-300x300.webp" alt="" loading="lazy"/></div><div class="product-info"><div class="product-name">STS-BodyPad™ XL</div><div class="product-desc">The XL positioning kit — expanded coverage for larger patients with reliable foam support.</div><div class="product-link">Learn More</div></div></a>
+    <a href="https://www.ninomed.com/sts-bodypad-complete/" class="product-card reveal reveal-delay-3" target="_blank"><div class="product-img"><img src="https://www.ninomed.com/wp-content/uploads/2025/04/STS_BodyPad_Reg_Plus2-300x300.webp" alt="" loading="lazy"/></div><div class="product-info"><div class="product-name">STS-BodyPad™ Regular Plus</div><div class="product-desc">21" × 29" pad with Lift Sheet, Body Strap, and Arm Protectors.</div><div class="product-link">Learn More</div></div></a>
+    <a href="https://www.ninomed.com/sts-bodypad/" class="product-card reveal reveal-delay-1" target="_blank"><div class="product-img"><img src="https://www.ninomed.com/wp-content/uploads/2025/04/STS_BodyPad_Reg_2-300x300.webp" alt="" loading="lazy"/></div><div class="product-info"><div class="product-name">STS-BodyPad™ Regular</div><div class="product-desc">The essential regular positioning kit. Efficient, effective, and ready for any OR.</div><div class="product-link">Learn More</div></div></a>
+    <a href="https://www.ninomed.com/sts-head-to-toe/" class="product-card reveal reveal-delay-2" target="_blank"><div class="product-img"><img src="https://www.ninomed.com/wp-content/uploads/2025/04/STS_Head-to_toe-300x300.webp" alt="" loading="lazy"/></div><div class="product-info"><div class="product-name">Pluma-Soft Head-To-Toe™</div><div class="product-desc">Full-table convoluted foam overlay for head-to-toe pressure ulcer prevention.</div><div class="product-link">Learn More</div></div></a>
+    <a href="https://www.ninomed.com/product/cush-in-it-iv-wrap-variety-pack/" class="product-card reveal reveal-delay-3" target="_blank"><div class="product-img"><img src="https://www.ninomed.com/wp-content/uploads/2024/03/CushionIt-300x300.jpg" alt="" loading="lazy"/></div><div class="product-info"><div class="product-name">Cush-In It™ IV Wrap</div><div class="product-desc">Foam wrap cushioning IV tubing, monitor wires, and accessories during surgery.</div><div class="product-link">Learn More</div></div></a>
+  </div>
+</section>
+
+<section class="pneumohub-section" id="pneumohub">
+  <div class="pneumo-img reveal"><img src="https://www.ninomed.com/wp-content/uploads/2026/02/PneumoHub-copy-2-300x300.jpg" alt="PneumoHub"/></div>
+  <div class="reveal reveal-delay-2">
+    <div class="section-label">Insufflation Management</div>
+    <h2 class="section-title">PneumoHub™<br><em>Everything</em> in one place</h2>
+    <p class="section-body">Control CO2, smoke evacuation, and scope cleaning from a single hub. Reliable insufflation, simplified — so your OR team can stay focused on the patient.</p>
+    <div class="pneumo-features">
+      <div class="pneumo-feat"><div class="pneumo-feat-title">CO2 Insufflation Control</div><div class="pneumo-feat-desc">Precise, reliable insufflation management for minimally invasive procedures.</div></div>
+      <div class="pneumo-feat"><div class="pneumo-feat-title">Smoke Evacuation</div><div class="pneumo-feat-desc">Integrated clearing keeps the surgical field visible and the OR environment safe.</div></div>
+      <div class="pneumo-feat"><div class="pneumo-feat-title">Scope Cleaning</div><div class="pneumo-feat-desc">Streamlined scope management reduces time between cleaning cycles.</div></div>
+    </div>
+    <a href="https://www.ninomed.com/pneumohub/" class="btn-primary" style="margin-top:32px;display:inline-flex" target="_blank">PneumoHub Details</a>
+  </div>
+</section>
+
+<section class="analytics-section" id="analytics">
+  <div class="mini-chart-wrap reveal">
+    <div class="mini-chart-title">Recovered Billing Opportunities</div>
+    <div class="mini-bar-chart">
+      <div class="mini-bar" style="height:42%"></div>
+      <div class="mini-bar" style="height:58%"></div>
+      <div class="mini-bar" style="height:51%"></div>
+      <div class="mini-bar" style="height:73%"></div>
+      <div class="mini-bar highlight" style="height:89%"></div>
+      <div class="mini-bar highlight" style="height:95%"></div>
+    </div>
+    <div class="mini-metrics">
+      <div><div class="mini-metric-val">+32%</div><div class="mini-metric-label">Revenue recovery YoY</div></div>
+      <div><div class="mini-metric-val">$0</div><div class="mini-metric-label">EHR replacement needed</div></div>
+    </div>
+  </div>
+  <div class="analytics-right reveal reveal-delay-2">
+    <div class="section-label" style="color:var(--teal-lt)"><span style="width:24px;height:1px;background:var(--teal-lt);display:inline-block;margin-right:10px"></span>Business Analytics</div>
+    <h2 class="section-title" style="color:var(--white)">Safe-T-Net™<br><em>Revenue</em> you're missing</h2>
+    <p class="section-body" style="color:rgba(255,255,255,.55)">A business analytics platform that finds and recovers billing opportunities standard EHRs and billing systems simply can't see.</p>
+    <div class="analytics-cards">
+      <div class="analytics-card"><div class="analytics-card-num">01</div><div><div class="analytics-card-title">Revenue Cycle Management</div><div class="analytics-card-desc">Identifies lost billing opportunities in real time across your surgical service lines.</div></div></div>
+      <div class="analytics-card"><div class="analytics-card-num">02</div><div><div class="analytics-card-title">Actionable Performance Data</div><div class="analytics-card-desc">Dashboards your team can actually act on — not just report on.</div></div></div>
+      <div class="analytics-card"><div class="analytics-card-num">03</div><div><div class="analytics-card-title">EHR-Agnostic</div><div class="analytics-card-desc">Works alongside your existing EHR. No rip-and-replace required.</div></div></div>
+    </div>
+    <a href="safe-t-net.html" class="btn-primary" style="margin-top:32px;display:inline-flex">Full Safe-T-Net Details</a>
+  </div>
+</section>
+
+<section class="testimonials-section">
+  <div class="section-label reveal">From the Field</div>
+  <h2 class="section-title reveal">Surgeons trust<br><em>Safe-T-Secure®</em></h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal reveal-delay-1"><p class="testimonial-text">The advantages of Safe-T-Secure were obvious the first time we used it. Well-designed with all the features needed for safe and efficient laparoscopic or robotic surgery.</p><div class="testimonial-author">Peter Rosenblatt, M.D.</div><div class="testimonial-role">Mount Auburn Hospital, Harvard Medical School Teaching Hospital</div></div>
+    <div class="testimonial-card reveal reveal-delay-2"><p class="testimonial-text">Safe-T-Secure works incredibly well. We attach it to the table and safely secure a patient in under a minute. Great product. It saves a ton of time in the OR.</p><div class="testimonial-author">OR Director</div><div class="testimonial-role">Regional Medical Center</div></div>
+    <div class="testimonial-card reveal reveal-delay-3"><p class="testimonial-text">Innovative design superior to anything else I've seen. It's become the standard setup at our facility for all robotic cases. We won't go back.</p><div class="testimonial-author">Attending Surgeon</div><div class="testimonial-role">Academic Medical Center</div></div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="reveal">
+      <div class="section-label" style="color:var(--teal-lt)"><span style="width:24px;height:1px;background:var(--teal-lt);display:inline-block;margin-right:10px"></span>Get in Touch</div>
+      <h2 class="section-title" style="color:white">Ready to improve<br>your <em style="color:var(--teal-lt)">OR workflow?</em></h2>
+      <p class="section-body" style="color:rgba(255,255,255,.55)">Our reps visit your facility. Call or write for orders, demos, or questions about any product.</p>
+      <div class="contact-info">
+        <div class="contact-item"><div class="contact-item-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="contact-item-label">Office</div><div class="contact-item-val">224 Harrison St Ste. 306, Syracuse, NY 13202</div></div></div>
+        <div class="contact-item"><div class="contact-item-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.64a16 16 0 006.45 6.45l1.81-1.31a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div><div><div class="contact-item-label">Phone</div><div class="contact-item-val"><a href="tel:9198183711">(919) 818-3711</a></div></div></div>
+        <div class="contact-item"><div class="contact-item-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="contact-item-label">Email</div><div class="contact-item-val"><a href="mailto:orders@ninomed.com">orders@ninomed.com</a><br/><a href="mailto:customer.service@ninomed.com" style="color:rgba(255,255,255,.45);font-size:13px">customer.service@ninomed.com</a></div></div></div>
+      </div>
+    </div>
+    <div class="contact-form reveal reveal-delay-2">
+      <div class="form-title">Contact a Rep</div>
+      <div class="form-row"><div class="form-group"><label>First Name</label><input type="text" placeholder="Jane"/></div><div class="form-group"><label>Last Name</label><input type="text" placeholder="Smith"/></div></div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder="jane@hospital.org"/></div>
+      <div class="form-group"><label>Phone</label><input type="tel" placeholder="(555) 000-0000"/></div>
+      <div class="form-group"><label>Company / Hospital</label><input type="text" placeholder="Memorial General Hospital"/></div>
+      <div class="form-group"><label>Product Interest</label><select><option value="">Select a product</option><option>Safe-T-Secure®</option><option>STS-BodyPad™</option><option>Pluma-Soft Head-To-Toe™</option><option>PneumoHub™</option><option>Safe-T-Net™</option><option>Cush-In It™</option><option>General Inquiry</option></select></div>
+      <div class="form-group"><label>Message</label><textarea placeholder="Tell us how we can help..."></textarea></div>
+      <button class="form-submit" onclick="handleSubmit(event)">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div><div class="footer-logo"><img src="https://www.ninomed.com/wp-content/uploads/2020/11/logo-2020.png" alt="NinoMed"/></div><p class="footer-tagline">NinoMed, LLC develops innovative medical device and analytics solutions that improve patient safety, OR efficiency, and health system revenue.</p></div>
+    <div><div class="footer-col-title">Products</div><ul class="footer-links"><li><a href="https://www.ninomed.com/safe-t-secure/" target="_blank">Safe-T-Secure®</a></li><li><a href="https://www.ninomed.com/sts-flex/" target="_blank">STS-BodyPad™ XL</a></li><li><a href="https://www.ninomed.com/sts-bodypad/" target="_blank">STS-BodyPad™ Regular</a></li><li><a href="https://www.ninomed.com/sts-head-to-toe/" target="_blank">Pluma-Soft Head-To-Toe™</a></li><li><a href="https://www.ninomed.com/pneumohub/" target="_blank">PneumoHub™</a></li></ul></div>
+    <div><div class="footer-col-title">Solutions</div><ul class="footer-links"><li><a href="https://www.ninomed.com/positioning-devices/" target="_blank">Patient Positioners</a></li><li><a href="safe-t-net.html">Safe-T-Net™ Analytics</a></li><li><a href="https://www.ninomed.com/surgical-foam-positioners/" target="_blank">Surgical Foam</a></li><li><a href="https://www.ninomed.com/product/cush-in-it-iv-wrap-variety-pack/" target="_blank">Cush-In It™</a></li></ul></div>
+    <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="about.html">About NinoMed</a></li><li><a href="https://www.ninomed.com/upcoming-events/" target="_blank">Upcoming Events</a></li><li><a href="https://www.ninomed.com/blog/" target="_blank">News</a></li><li><a href="#contact">Contact</a></li><li><a href="https://www.ninomed.com/shop/" target="_blank">Shop</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><div class="footer-copy">© 2026 NinoMed, LLC. All rights reserved.</div><a href="https://www.ninomed.com/wp-content/uploads/2025/06/NinoMed_2025_catalog_8.pdf" class="footer-catalog" target="_blank">↓ 2026 Product Catalog</a></div>
+</footer>
+
+<script>
+  const navbar=document.getElementById('navbar');
+  window.addEventListener('scroll',()=>navbar.classList.toggle('scrolled',window.scrollY>40));
+  const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+  function closeMenu(){document.getElementById('mobileMenu').classList.remove('open')}
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}})});
+  function handleSubmit(e){e.preventDefault();alert('Demo only — form submits to NinoMed contact system in production.')}
+</script>
+</body>
+</html>

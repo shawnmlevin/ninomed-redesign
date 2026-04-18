@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About NinoMed — Smart Patient Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --navy:#0B1F35;--navy-mid:#122840;--teal:#0899A8;--teal-lt:#0ABCCE;
+      --white:#FFFFFF;--off-wh:#F2F6F8;--gray:#8A9BAB;--text:#1C2B3A;--border:#D6E3EC;
+      --font-display:'Fraunces',Georgia,serif;--font-body:'DM Sans',system-ui,sans-serif;
+      --ease:cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-body);color:var(--text);background:var(--white);overflow-x:hidden}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 64px;display:flex;align-items:center;justify-content:space-between;height:72px;background:rgba(11,31,53,.97);backdrop-filter:blur(12px);box-shadow:0 1px 0 rgba(255,255,255,.06)}
+    .nav-logo img{height:34px;filter:brightness(0) invert(1)}
+    .nav-links{display:flex;gap:36px;list-style:none;align-items:center}
+    .nav-links a{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.7);text-decoration:none;transition:color .2s}
+    .nav-links a:hover,.nav-links a.active{color:var(--white)}
+    .nav-cta{color:var(--white)!important;border:1px solid rgba(255,255,255,.35);padding:9px 22px;border-radius:2px;transition:background .2s,border-color .2s!important}
+    .nav-cta:hover{background:var(--teal)!important;border-color:var(--teal)!important}
+    .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+    .nav-hamburger span{width:24px;height:2px;background:white;display:block}
+    .mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;z-index:99;background:var(--navy);padding:24px 32px 32px;flex-direction:column;gap:20px}
+    .mobile-menu.open{display:flex}
+    .mobile-menu a{color:rgba(255,255,255,.8);text-decoration:none;font-size:15px;font-weight:500}
+
+    /* HERO */
+    .page-hero{background:var(--navy);padding:140px 80px 100px;position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .page-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(8,153,168,.15) 1px,transparent 1px);background-size:36px 36px;opacity:.5;pointer-events:none}
+    .page-hero::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:80px;background:linear-gradient(to bottom,transparent,var(--white));pointer-events:none}
+    .hero-left{position:relative;z-index:2}
+    .breadcrumb{display:flex;align-items:center;gap:8px;margin-bottom:24px;font-size:12px;color:rgba(255,255,255,.4)}
+    .breadcrumb a{color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
+    .breadcrumb a:hover{color:var(--teal-lt)}
+    .breadcrumb span{color:rgba(255,255,255,.2)}
+    .hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+    .hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--teal)}
+    .page-hero h1{font-family:var(--font-display);font-size:clamp(38px,4.5vw,62px);font-weight:300;line-height:1.1;color:var(--white);margin-bottom:24px}
+    .page-hero h1 em{font-style:italic;color:var(--teal-lt)}
+    .page-hero-desc{font-size:17px;line-height:1.75;color:rgba(255,255,255,.55);max-width:520px}
+    .hero-right{position:relative;z-index:2;display:flex;flex-direction:column;gap:16px}
+    .mission-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:28px 32px}
+    .mission-card-label{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-lt);margin-bottom:12px}
+    .mission-card-text{font-family:var(--font-display);font-size:18px;font-style:italic;color:var(--white);line-height:1.6;font-weight:300}
+
+    /* SECTIONS */
+    section{padding:100px 80px}
+    .section-label{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-bottom:16px}
+    .section-label::before{content:'';width:24px;height:1px;background:var(--teal)}
+    .section-title{font-family:var(--font-display);font-size:clamp(30px,3.5vw,46px);font-weight:300;line-height:1.15;color:var(--navy);margin-bottom:20px}
+    .section-title em{font-style:italic;color:var(--teal)}
+    .section-body{font-size:16px;line-height:1.75;color:#5A7080;max-width:560px}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+    .reveal.visible{opacity:1;transform:none}
+    .reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}
+
+    /* STORY */
+    .story-section{background:var(--white);padding:100px 80px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .story-img{border-radius:8px;overflow:hidden}
+    .story-img img{width:100%;display:block;object-fit:cover}
+    .story-body p{font-size:16px;line-height:1.85;color:#4A6070;margin-bottom:20px}
+
+    /* VALUES */
+    .values-section{background:var(--off-wh);padding:100px 80px}
+    .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+    .value-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:36px;transition:border-color .3s,box-shadow .3s}
+    .value-card:hover{border-color:var(--teal);box-shadow:0 12px 40px rgba(11,31,53,.08)}
+    .value-icon{width:48px;height:48px;background:rgba(8,153,168,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+    .value-icon svg{width:22px;height:22px;stroke:var(--teal);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .value-title{font-family:var(--font-display);font-size:22px;font-weight:400;color:var(--navy);margin-bottom:12px}
+    .value-desc{font-size:14px;line-height:1.7;color:var(--gray)}
+
+    /* TIMELINE */
+    .timeline-section{background:var(--white);padding:100px 80px}
+    .timeline{position:relative;margin-top:56px;padding-left:48px}
+    .timeline::before{content:'';position:absolute;left:8px;top:8px;bottom:8px;width:2px;background:var(--border)}
+    .timeline-item{position:relative;margin-bottom:48px}
+    .timeline-item::before{content:'';position:absolute;left:-44px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--white);border:2px solid var(--teal);transition:background .3s}
+    .timeline-item:hover::before{background:var(--teal)}
+    .timeline-year{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+    .timeline-title{font-family:var(--font-display);font-size:20px;font-weight:400;color:var(--navy);margin-bottom:8px}
+    .timeline-desc{font-size:14px;line-height:1.7;color:var(--gray);max-width:580px}
+
+    /* TEAM */
+    .team-strip{background:var(--navy);padding:80px;display:flex;align-items:center;justify-content:space-between;gap:48px;flex-wrap:wrap}
+    .team-left h2{font-family:var(--font-display);font-size:clamp(28px,3.5vw,42px);font-weight:300;color:var(--white);line-height:1.2;margin-bottom:12px}
+    .team-left h2 em{font-style:italic;color:var(--teal-lt)}
+    .team-left p{font-size:16px;color:rgba(255,255,255,.5);max-width:480px;line-height:1.7}
+    .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:var(--white);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:15px 32px;border-radius:2px;transition:background .25s var(--ease),transform .2s}
+    .btn-primary:hover{background:var(--teal-lt);transform:translateY(-1px)}
+
+    /* CERTIFICATIONS */
+    .certs-section{background:var(--off-wh);padding:60px 80px;border-top:1px solid var(--border)}
+    .certs-label{text-align:center;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-bottom:36px}
+    .certs-row{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap}
+    .cert-item{text-align:center;opacity:.55;transition:opacity .25s;cursor:default}
+    .cert-item:hover{opacity:.85}
+    .cert-name{font-size:14px;font-weight:700;color:var(--navy);letter-spacing:.04em}
+    .cert-sub{font-size:11px;color:var(--gray);margin-top:4px}
+
+    /* FOOTER */
+    footer{background:#060F1A;padding:60px 80px 40px}
+    .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+    .footer-logo img{height:30px;filter:brightness(0) invert(1);opacity:.6;margin-bottom:16px}
+    .footer-tagline{font-size:13px;color:rgba(255,255,255,.38);line-height:1.7;max-width:280px}
+    .footer-col-title{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:16px}
+    .footer-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .footer-links a{font-size:13px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
+    .footer-links a:hover{color:var(--teal-lt)}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:28px;display:flex;justify-content:space-between;align-items:center}
+    .footer-copy{font-size:12px;color:rgba(255,255,255,.28)}
+    .footer-catalog{font-size:12px;font-weight:600;color:var(--teal);text-decoration:none}
+    .footer-catalog:hover{color:var(--teal-lt)}
+
+    @media(max-width:1024px){
+      section{padding:80px 40px}
+      .page-hero{grid-template-columns:1fr;padding:120px 40px 80px}
+      .story-section{grid-template-columns:1fr}
+      .values-grid{grid-template-columns:1fr 1fr}
+      .footer-top{grid-template-columns:1fr 1fr}
+      nav{padding:0 24px}
+    }
+    @media(max-width:768px){
+      .nav-links{display:none}
+      .nav-hamburger{display:flex}
+      section{padding:64px 24px}
+      .page-hero{padding:120px 24px 64px}
+      .values-grid{grid-template-columns:1fr}
+      .footer-top{grid-template-columns:1fr}
+      footer{padding:48px 24px 32px}
+      .team-strip{padding:64px 24px;flex-direction:column}
+      .certs-section{padding:48px 24px}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><img src="https://www.ninomed.com/wp-content/uploads/2020/11/logo-2020.png" alt="NinoMed"/></a>
+  <ul class="nav-links">
+    <li><a href="index.html#products">Products</a></li>
+    <li><a href="index.html#pneumohub">PneumoHub</a></li>
+    <li><a href="safe-t-net.html">Safe-T-Net</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="index.html#contact" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="nav-hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html#products" onclick="closeMenu()">Products</a>
+  <a href="safe-t-net.html" onclick="closeMenu()">Safe-T-Net</a>
+  <a href="about.html" onclick="closeMenu()">About</a>
+  <a href="index.html#contact" onclick="closeMenu()">Contact Us</a>
+</div>
+
+<div class="page-hero">
+  <div class="hero-left">
+    <div class="breadcrumb"><a href="index.html">NinoMed</a><span>/</span><span>About</span></div>
+    <div class="hero-eyebrow">About NinoMed</div>
+    <h1>Built for the<br><em>people</em> in the OR</h1>
+    <p class="page-hero-desc">NinoMed, LLC develops medical device and analytics products that change lives, improve OR efficiency, and deliver real value to health systems and their patients.</p>
+  </div>
+  <div class="hero-right">
+    <div class="mission-card">
+      <div class="mission-card-label">Our Mission</div>
+      <div class="mission-card-text">"To invent and develop promising products that change lives, improve efficiency, and provide value to payers and hospitals."</div>
+    </div>
+    <div class="mission-card">
+      <div class="mission-card-label">Headquarters</div>
+      <div style="font-size:15px;color:rgba(255,255,255,.7);line-height:1.6">224 Harrison St, Ste. 306<br>Syracuse, NY 13202<br><br><a href="tel:9198183711" style="color:var(--teal-lt);text-decoration:none">(919) 818-3711</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- STORY -->
+<section class="story-section">
+  <div class="story-img reveal">
+    <img src="https://www.ninomed.com/wp-content/uploads/2026/04/STS-and-STS-Body-Pad-120-Day-Biodegradability-copy-1024x578.webp" alt="NinoMed Products"/>
+  </div>
+  <div class="reveal reveal-delay-2">
+    <div class="section-label">Our Story</div>
+    <h2 class="section-title">Invented by people<br>who <em>saw the problem</em></h2>
+    <div class="story-body">
+      <p>NinoMed was founded on a straightforward observation: OR teams were spending valuable time wrestling with inadequate patient positioning equipment — taping, stacking foam wedges, rigging arm boards — when they should be focused on the patient.</p>
+      <p>The Safe-T-Secure® was the answer. A single, all-in-one solution that gets a patient safely secured in Trendelenburg position in under a minute, with no shoulder blocks, no tape, and no improvisation. It became the standard at major academic medical centers nationwide.</p>
+      <p>From there, NinoMed expanded its mission — developing the PneumoHub™ to streamline insufflation management, the STS-BodyPad™ line for a full range of positioning needs, and Safe-T-Net™ to help health systems recover the billing revenue their EHRs quietly miss every day.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-section">
+  <div class="section-label reveal">What Drives Us</div>
+  <h2 class="section-title reveal">Three things we<br><em>don't compromise</em> on</h2>
+  <div class="values-grid">
+    <div class="value-card reveal reveal-delay-1">
+      <div class="value-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div class="value-title">Patient Safety</div>
+      <div class="value-desc">Every product we design starts with one question: does this make the patient safer? AORN compliance isn't a checkbox for us — it's a minimum. Our products exceed it.</div>
+    </div>
+    <div class="value-card reveal reveal-delay-2">
+      <div class="value-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      <div class="value-title">OR Efficiency</div>
+      <div class="value-desc">Time in the OR costs money. Every minute of unnecessary setup is a minute the patient spends under anesthesia. Our products are designed to get out of the way and let surgeons work.</div>
+    </div>
+    <div class="value-card reveal reveal-delay-3">
+      <div class="value-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div class="value-title">Affordable Innovation</div>
+      <div class="value-desc">Premium medical equipment shouldn't come at a premium that blocks adoption. NinoMed products are priced to let hospitals deploy them broadly — not just in select ORs.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section">
+  <div class="section-label reveal">Company History</div>
+  <h2 class="section-title reveal">From one idea<br>to a full <em>platform</em></h2>
+  <div class="timeline reveal">
+    <div class="timeline-item">
+      <div class="timeline-year">2010s</div>
+      <div class="timeline-title">Safe-T-Secure® launches</div>
+      <div class="timeline-desc">The original All-In-One Trendelenburg positioning solution is introduced. Adopted quickly by laparoscopic and robotic surgery programs at leading academic medical centers, including Harvard Medical School's Mount Auburn Hospital.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">Mid 2010s</div>
+      <div class="timeline-title">Pluma-Soft® expands the lineup</div>
+      <div class="timeline-desc">NinoMed introduces Pluma-Soft® pressure ulcer prevention products, addressing the full scope of OR table patient protection — from positioning through head-to-toe coverage.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2019</div>
+      <div class="timeline-title">Safe-T-Net™ business analytics platform</div>
+      <div class="timeline-desc">NinoMed expands beyond medical devices with Safe-T-Net™ — a revenue cycle analytics platform designed to help health systems identify and recover billing opportunities that standard EHRs miss.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2020–2024</div>
+      <div class="timeline-title">STS-BodyPad™ line and PneumoHub™</div>
+      <div class="timeline-desc">The STS-BodyPad™ family expands to cover every clinical scenario — Regular, Regular Plus, XL, and XL Plus — alongside the PneumoHub™ for integrated CO2, smoke evacuation, and scope cleaning management.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2026</div>
+      <div class="timeline-title">120-day biodegradable STS products</div>
+      <div class="timeline-desc">NinoMed introduces biodegradable versions of the Safe-T-Secure® and STS-BodyPad™ — a significant step toward sustainable OR practices without any compromise on performance.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<div class="certs-section reveal">
+  <div class="certs-label">Standards &amp; Compliance</div>
+  <div class="certs-row">
+    <div class="cert-item"><div class="cert-name">AORN</div><div class="cert-sub">Patient Positioning Guidelines</div></div>
+    <div class="cert-item"><div class="cert-name">FDA</div><div class="cert-sub">Medical Device Clearance</div></div>
+    <div class="cert-item"><div class="cert-name">Latex-Free</div><div class="cert-sub">All Surgical Products</div></div>
+    <div class="cert-item"><div class="cert-name">Biodegradable</div><div class="cert-sub">120-Day Certification</div></div>
+    <div class="cert-item"><div class="cert-name">Vacuum Sealed</div><div class="cert-sub">Sterile Packaging</div></div>
+  </div>
+</div>
+
+<!-- TEAM CTA -->
+<div class="team-strip">
+  <div class="team-left">
+    <h2>Ready to see NinoMed<br>in <em>your facility?</em></h2>
+    <p>Our reps come to you. Call (919) 818-3711 or fill out the contact form and a rep will be in touch within one business day.</p>
+  </div>
+  <a href="index.html#contact" class="btn-primary">Contact a Rep</a>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div><div class="footer-logo"><img src="https://www.ninomed.com/wp-content/uploads/2020/11/logo-2020.png" alt="NinoMed"/></div><p class="footer-tagline">NinoMed, LLC develops innovative medical device and analytics solutions that improve patient safety, OR efficiency, and health system revenue.</p></div>
+    <div><div class="footer-col-title">Products</div><ul class="footer-links"><li><a href="https://www.ninomed.com/safe-t-secure/" target="_blank">Safe-T-Secure®</a></li><li><a href="https://www.ninomed.com/sts-flex/" target="_blank">STS-BodyPad™ XL</a></li><li><a href="https://www.ninomed.com/sts-bodypad/" target="_blank">STS-BodyPad™ Regular</a></li><li><a href="https://www.ninomed.com/sts-head-to-toe/" target="_blank">Pluma-Soft Head-To-Toe™</a></li><li><a href="https://www.ninomed.com/pneumohub/" target="_blank">PneumoHub™</a></li></ul></div>
+    <div><div class="footer-col-title">Solutions</div><ul class="footer-links"><li><a href="index.html#products">Patient Positioners</a></li><li><a href="safe-t-net.html">Safe-T-Net™ Analytics</a></li><li><a href="https://www.ninomed.com/surgical-foam-positioners/" target="_blank">Surgical Foam</a></li></ul></div>
+    <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="about.html">About NinoMed</a></li><li><a href="https://www.ninomed.com/upcoming-events/" target="_blank">Upcoming Events</a></li><li><a href="https://www.ninomed.com/blog/" target="_blank">News</a></li><li><a href="index.html#contact">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><div class="footer-copy">© 2026 NinoMed, LLC. All rights reserved.</div><a href="https://www.ninomed.com/wp-content/uploads/2025/06/NinoMed_2025_catalog_8.pdf" class="footer-catalog" target="_blank">↓ 2026 Product Catalog</a></div>
+</footer>
+
+<script>
+  const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+  function closeMenu(){document.getElementById('mobileMenu').classList.remove('open')}
+</script>
+</body>
+</html>

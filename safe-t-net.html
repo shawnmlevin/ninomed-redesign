@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Safe-T-Net™ — Revenue Analytics | NinoMed</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --navy:#0B1F35;--navy-mid:#122840;--teal:#0899A8;--teal-lt:#0ABCCE;--teal-dk:#066475;
+      --white:#FFFFFF;--off-wh:#F2F6F8;--gray:#8A9BAB;--text:#1C2B3A;--border:#D6E3EC;
+      --green:#1DB87A;--amber:#F5A623;
+      --font-display:'Fraunces',Georgia,serif;--font-body:'DM Sans',system-ui,sans-serif;
+      --ease:cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-body);color:var(--text);background:var(--white);overflow-x:hidden}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 64px;display:flex;align-items:center;justify-content:space-between;height:72px;background:rgba(11,31,53,.97);backdrop-filter:blur(12px);box-shadow:0 1px 0 rgba(255,255,255,.06)}
+    .nav-logo img{height:34px;filter:brightness(0) invert(1)}
+    .nav-links{display:flex;gap:36px;list-style:none;align-items:center}
+    .nav-links a{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.7);text-decoration:none;transition:color .2s}
+    .nav-links a:hover,.nav-links a.active{color:var(--white)}
+    .nav-cta{color:var(--white)!important;border:1px solid rgba(255,255,255,.35);padding:9px 22px;border-radius:2px;transition:background .2s,border-color .2s!important}
+    .nav-cta:hover{background:var(--teal)!important;border-color:var(--teal)!important}
+    .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+    .nav-hamburger span{width:24px;height:2px;background:white;display:block}
+    .mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;z-index:99;background:var(--navy);padding:24px 32px 32px;flex-direction:column;gap:20px}
+    .mobile-menu.open{display:flex}
+    .mobile-menu a{color:rgba(255,255,255,.8);text-decoration:none;font-size:15px;font-weight:500}
+
+    /* HERO */
+    .page-hero{background:var(--navy);padding:140px 80px 100px;position:relative;overflow:hidden}
+    .page-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(8,153,168,.15) 1px,transparent 1px);background-size:36px 36px;opacity:.6;pointer-events:none}
+    .page-hero::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:80px;background:linear-gradient(to bottom,transparent,var(--white));pointer-events:none}
+    .hero-inner{max-width:760px;position:relative;z-index:2}
+    .breadcrumb{display:flex;align-items:center;gap:8px;margin-bottom:24px;font-size:12px;color:rgba(255,255,255,.4)}
+    .breadcrumb a{color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
+    .breadcrumb a:hover{color:var(--teal-lt)}
+    .breadcrumb span{color:rgba(255,255,255,.2)}
+    .hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+    .hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--teal)}
+    .page-hero h1{font-family:var(--font-display);font-size:clamp(40px,5vw,68px);font-weight:300;line-height:1.08;color:var(--white);margin-bottom:24px}
+    .page-hero h1 em{font-style:italic;color:var(--teal-lt)}
+    .page-hero-desc{font-size:18px;line-height:1.7;color:rgba(255,255,255,.55);max-width:620px;margin-bottom:40px}
+    .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:var(--white);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:15px 32px;border-radius:2px;transition:background .25s var(--ease),transform .2s}
+    .btn-primary:hover{background:var(--teal-lt);transform:translateY(-1px)}
+    .btn-ghost{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.75);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:15px 32px;border-radius:2px;transition:border-color .25s,color .25s,transform .2s}
+    .btn-ghost:hover{border-color:var(--teal);color:var(--white);transform:translateY(-1px)}
+
+    /* SECTION COMMONS */
+    section{padding:100px 80px}
+    .section-label{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-bottom:16px}
+    .section-label::before{content:'';width:24px;height:1px;background:var(--teal)}
+    .section-title{font-family:var(--font-display);font-size:clamp(30px,3.5vw,46px);font-weight:300;line-height:1.15;color:var(--navy);margin-bottom:20px}
+    .section-title em{font-style:italic;color:var(--teal)}
+    .section-body{font-size:16px;line-height:1.75;color:#5A7080;max-width:560px}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+    .reveal.visible{opacity:1;transform:none}
+    .reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}
+
+    /* KPI STRIP */
+    .kpi-strip{background:var(--off-wh);padding:60px 80px;border-bottom:1px solid var(--border)}
+    .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+    .kpi-card{background:var(--white);border:1px solid var(--border);padding:36px 32px;transition:border-color .3s,box-shadow .3s}
+    .kpi-card:hover{border-color:var(--teal);box-shadow:0 8px 32px rgba(11,31,53,.08)}
+    .kpi-card:first-child{border-radius:6px 0 0 6px}
+    .kpi-card:last-child{border-radius:0 6px 6px 0}
+    .kpi-num{font-family:var(--font-display);font-size:48px;font-weight:300;color:var(--navy);line-height:1;margin-bottom:10px}
+    .kpi-num span{color:var(--teal)}
+    .kpi-label{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:6px}
+    .kpi-desc{font-size:13px;color:var(--gray);line-height:1.5}
+
+    /* DASHBOARD PREVIEW */
+    .dashboard-section{padding:100px 80px;background:var(--white)}
+    .dashboard-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;gap:24px;flex-wrap:wrap}
+    .dashboard-mock{
+      background:var(--navy);border-radius:12px;overflow:hidden;
+      box-shadow:0 32px 80px rgba(11,31,53,.25);
+    }
+    .dash-topbar{
+      background:var(--navy-mid);padding:14px 24px;
+      display:flex;align-items:center;justify-content:space-between;
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+    .dash-title{font-size:13px;font-weight:600;color:rgba(255,255,255,.7);letter-spacing:.04em}
+    .dash-actions{display:flex;gap:8px}
+    .dash-btn{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 14px;border-radius:2px;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);cursor:pointer;background:none;transition:border-color .2s,color .2s}
+    .dash-btn.active,.dash-btn:hover{border-color:var(--teal);color:var(--teal)}
+    .dash-body{padding:32px;display:grid;grid-template-columns:2fr 1fr;gap:24px}
+
+    /* Revenue chart */
+    .chart-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:24px}
+    .chart-card-title{font-size:12px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+    .chart-card-value{font-family:var(--font-display);font-size:32px;font-weight:300;color:var(--white);margin-bottom:4px}
+    .chart-card-change{font-size:12px;color:var(--green);font-weight:500;margin-bottom:20px}
+    .bar-chart-wrap{position:relative;height:160px}
+    .bar-chart{display:flex;align-items:flex-end;gap:6px;height:100%}
+    .bar{flex:1;border-radius:3px 3px 0 0;position:relative;cursor:pointer;transition:opacity .2s}
+    .bar:hover{opacity:.85}
+    .bar-label{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:10px;color:rgba(255,255,255,.3);white-space:nowrap}
+    .chart-x-axis{display:flex;gap:6px;margin-top:22px}
+    .chart-x-label{flex:1;font-size:10px;color:rgba(255,255,255,.25);text-align:center}
+
+    /* Donut chart */
+    .donut-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:24px;display:flex;flex-direction:column}
+    .donut-wrap{display:flex;align-items:center;justify-content:center;margin:20px 0;position:relative}
+    .donut-center{position:absolute;text-align:center}
+    .donut-center-val{font-family:var(--font-display);font-size:26px;font-weight:300;color:var(--white)}
+    .donut-center-label{font-size:10px;color:rgba(255,255,255,.35);margin-top:2px}
+    .donut-legend{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+    .legend-item{display:flex;align-items:center;gap:10px;font-size:12px;color:rgba(255,255,255,.6)}
+    .legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+    /* Bottom row */
+    .dash-bottom{padding:0 32px 32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}
+    .metric-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:20px 24px}
+    .metric-label{font-size:11px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+    .metric-val{font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--white);margin-bottom:4px}
+    .metric-trend{font-size:12px;font-weight:500}
+    .trend-up{color:var(--green)}
+    .trend-down{color:#F56565}
+    .sparkline{height:32px;margin-top:12px}
+    .sparkline svg{width:100%;height:100%}
+
+    /* HOW IT WORKS */
+    .how-section{background:var(--off-wh);padding:100px 80px}
+    .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:56px}
+    .how-step{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:36px;position:relative;overflow:hidden}
+    .how-step::before{content:attr(data-step);font-family:var(--font-display);font-size:100px;font-weight:300;color:var(--teal);opacity:.07;position:absolute;top:-10px;right:16px;line-height:1}
+    .how-step-icon{width:48px;height:48px;background:rgba(8,153,168,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+    .how-step-icon svg{width:22px;height:22px;stroke:var(--teal);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .how-step-num{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+    .how-step-title{font-family:var(--font-display);font-size:22px;font-weight:400;color:var(--navy);margin-bottom:12px}
+    .how-step-desc{font-size:14px;line-height:1.7;color:var(--gray)}
+
+    /* FEATURES */
+    .features-section{background:var(--white);padding:100px 80px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:flex-start}
+    .features-list{display:flex;flex-direction:column;gap:0}
+    .feature-item{padding:28px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:padding-left .2s}
+    .feature-item:hover,.feature-item.active{padding-left:16px;border-left:2px solid var(--teal);margin-left:-2px}
+    .feature-item-header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .feature-item-title{font-size:16px;font-weight:600;color:var(--navy)}
+    .feature-item-icon{width:32px;height:32px;border-radius:50%;background:rgba(8,153,168,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .feature-item-icon svg{width:14px;height:14px;stroke:var(--teal);fill:none;stroke-width:2;stroke-linecap:round}
+    .feature-item-desc{font-size:14px;line-height:1.7;color:var(--gray);margin-top:12px;display:none}
+    .feature-item.active .feature-item-desc{display:block}
+    .features-visual{position:sticky;top:100px}
+    .features-visual-card{background:var(--off-wh);border:1px solid var(--border);border-radius:8px;padding:40px;min-height:320px;display:flex;flex-direction:column;justify-content:center}
+
+    /* CTA STRIP */
+    .cta-section{background:var(--navy);padding:80px;text-align:center;position:relative;overflow:hidden}
+    .cta-section::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(8,153,168,.15) 1px,transparent 1px);background-size:36px 36px;opacity:.5;pointer-events:none}
+    .cta-section h2{font-family:var(--font-display);font-size:clamp(32px,4vw,52px);font-weight:300;color:var(--white);margin-bottom:16px;position:relative;z-index:2}
+    .cta-section h2 em{font-style:italic;color:var(--teal-lt)}
+    .cta-section p{font-size:17px;color:rgba(255,255,255,.55);max-width:520px;margin:0 auto 40px;line-height:1.7;position:relative;z-index:2}
+    .cta-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative;z-index:2}
+
+    /* FOOTER */
+    footer{background:#060F1A;padding:60px 80px 40px}
+    .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+    .footer-logo img{height:30px;filter:brightness(0) invert(1);opacity:.6;margin-bottom:16px}
+    .footer-tagline{font-size:13px;color:rgba(255,255,255,.38);line-height:1.7;max-width:280px}
+    .footer-col-title{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:16px}
+    .footer-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .footer-links a{font-size:13px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
+    .footer-links a:hover{color:var(--teal-lt)}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:28px;display:flex;justify-content:space-between;align-items:center}
+    .footer-copy{font-size:12px;color:rgba(255,255,255,.28)}
+    .footer-catalog{font-size:12px;font-weight:600;color:var(--teal);text-decoration:none}
+    .footer-catalog:hover{color:var(--teal-lt)}
+
+    @media(max-width:1024px){
+      section{padding:80px 40px}
+      .kpi-grid{grid-template-columns:1fr 1fr}
+      .kpi-card:first-child{border-radius:6px 0 0 0}
+      .kpi-card:last-child{border-radius:0 0 6px 0}
+      .features-section,.dash-body{grid-template-columns:1fr}
+      .footer-top{grid-template-columns:1fr 1fr}
+      nav{padding:0 24px}
+      .how-grid{grid-template-columns:1fr}
+      .dash-bottom{grid-template-columns:1fr}
+    }
+    @media(max-width:768px){
+      .nav-links{display:none}
+      .nav-hamburger{display:flex}
+      section{padding:64px 24px}
+      .page-hero{padding:120px 24px 80px}
+      .kpi-grid{grid-template-columns:1fr}
+      .kpi-card:first-child,.kpi-card:last-child{border-radius:0}
+      .footer-top{grid-template-columns:1fr}
+      footer{padding:48px 24px 32px}
+      .cta-section{padding:64px 24px}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><img src="https://www.ninomed.com/wp-content/uploads/2020/11/logo-2020.png" alt="NinoMed"/></a>
+  <ul class="nav-links">
+    <li><a href="index.html#products">Products</a></li>
+    <li><a href="index.html#pneumohub">PneumoHub</a></li>
+    <li><a href="safe-t-net.html" class="active">Safe-T-Net</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="index.html#contact" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="nav-hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html#products" onclick="closeMenu()">Products</a>
+  <a href="safe-t-net.html" onclick="closeMenu()">Safe-T-Net</a>
+  <a href="about.html" onclick="closeMenu()">About</a>
+  <a href="index.html#contact" onclick="closeMenu()">Contact Us</a>
+</div>
+
+<div class="page-hero">
+  <div class="hero-inner">
+    <div class="breadcrumb"><a href="index.html">NinoMed</a><span>/</span><span>Safe-T-Net™</span></div>
+    <div class="hero-eyebrow">Revenue Cycle Analytics</div>
+    <h1>The revenue your<br>EHR is <em>leaving behind</em></h1>
+    <p class="page-hero-desc">Safe-T-Net™ is a business analytics platform that identifies and recovers billing opportunities health systems can't capture with standard EHRs or billing software alone.</p>
+    <div style="display:flex;gap:14px;flex-wrap:wrap">
+      <a href="index.html#contact" class="btn-primary">Request a Demo</a>
+      <a href="index.html#contact" class="btn-ghost">Talk to a Rep</a>
+    </div>
+  </div>
+</div>
+
+<!-- KPI STRIP -->
+<div class="kpi-strip">
+  <div class="kpi-grid">
+    <div class="kpi-card reveal">
+      <div class="kpi-num"><span>+32</span>%</div>
+      <div class="kpi-label">Revenue Recovery</div>
+      <div class="kpi-desc">Average billing opportunity increase vs. EHR-only capture in year one.</div>
+    </div>
+    <div class="kpi-card reveal reveal-delay-1">
+      <div class="kpi-num"><span>$0</span></div>
+      <div class="kpi-label">EHR Replacement</div>
+      <div class="kpi-desc">Safe-T-Net works alongside your existing infrastructure. No rip-and-replace.</div>
+    </div>
+    <div class="kpi-card reveal reveal-delay-2">
+      <div class="kpi-num"><span>Real</span></div>
+      <div class="kpi-label">Time Identification</div>
+      <div class="kpi-desc">Opportunities flagged in real time, not surfaced weeks later in a report.</div>
+    </div>
+    <div class="kpi-card reveal reveal-delay-3">
+      <div class="kpi-num"><span>100</span>%</div>
+      <div class="kpi-label">Actionable Data</div>
+      <div class="kpi-desc">Every insight in Safe-T-Net is tied to a specific recoverable action your team can take.</div>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD PREVIEW -->
+<section class="dashboard-section">
+  <div class="dashboard-header">
+    <div>
+      <div class="section-label reveal">Live Dashboard</div>
+      <h2 class="section-title reveal">Data that drives<br><em>decisions</em></h2>
+    </div>
+    <p class="section-body reveal" style="max-width:380px;margin:0">Safe-T-Net surfaces what matters — missed charges, undercoded procedures, and payer performance — in a single view.</p>
+  </div>
+  <div class="dashboard-mock reveal">
+    <div class="dash-topbar">
+      <div class="dash-title">Safe-T-Net™ — Revenue Performance Dashboard</div>
+      <div class="dash-actions">
+        <button class="dash-btn active">MTD</button>
+        <button class="dash-btn">QTD</button>
+        <button class="dash-btn">YTD</button>
+      </div>
+    </div>
+    <div class="dash-body">
+      <!-- Revenue Chart -->
+      <div class="chart-card">
+        <div class="chart-card-title">Recovered Revenue</div>
+        <div class="chart-card-value">$1,284,600</div>
+        <div class="chart-card-change">↑ 32.4% vs. prior period</div>
+        <div class="bar-chart-wrap">
+          <div class="bar-chart" id="revenueChart"></div>
+        </div>
+        <div class="chart-x-axis" id="chartLabels"></div>
+      </div>
+      <!-- Donut -->
+      <div class="donut-card">
+        <div class="chart-card-title">Opportunity Types</div>
+        <div class="donut-wrap">
+          <svg width="140" height="140" viewBox="0 0 140 140">
+            <circle cx="70" cy="70" r="54" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="22"/>
+            <circle cx="70" cy="70" r="54" fill="none" stroke="#0899A8" stroke-width="22" stroke-dasharray="203 136" stroke-dashoffset="0" transform="rotate(-90 70 70)"/>
+            <circle cx="70" cy="70" r="54" fill="none" stroke="#0ABCCE" stroke-width="22" stroke-dasharray="82 257" stroke-dashoffset="-203" transform="rotate(-90 70 70)"/>
+            <circle cx="70" cy="70" r="54" fill="none" stroke="rgba(8,153,168,.3)" stroke-width="22" stroke-dasharray="54 285" stroke-dashoffset="-285" transform="rotate(-90 70 70)"/>
+          </svg>
+          <div class="donut-center">
+            <div class="donut-center-val">338</div>
+            <div class="donut-center-label">Total items</div>
+          </div>
+        </div>
+        <div class="donut-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#0899A8"></div><span>Missed charges (60%)</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:#0ABCCE"></div><span>Undercoded (24%)</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:rgba(8,153,168,.3)"></div><span>Payer issues (16%)</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="dash-bottom">
+      <div class="metric-card">
+        <div class="metric-label">Avg. Recovery / Case</div>
+        <div class="metric-val">$3,802</div>
+        <div class="metric-trend trend-up">↑ 14.2% vs. last quarter</div>
+        <div class="sparkline"><svg viewBox="0 0 120 32" preserveAspectRatio="none"><polyline points="0,28 20,22 40,18 60,14 80,10 100,6 120,3" fill="none" stroke="#0899A8" stroke-width="2"/></svg></div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Open Opportunities</div>
+        <div class="metric-val">47</div>
+        <div class="metric-trend trend-down">↓ 23 since last week</div>
+        <div class="sparkline"><svg viewBox="0 0 120 32" preserveAspectRatio="none"><polyline points="0,4 20,8 40,12 60,16 80,12 100,8 120,10" fill="none" stroke="#0ABCCE" stroke-width="2"/></svg></div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Capture Rate</div>
+        <div class="metric-val">94.3%</div>
+        <div class="metric-trend trend-up">↑ 8.1% vs. baseline</div>
+        <div class="sparkline"><svg viewBox="0 0 120 32" preserveAspectRatio="none"><polyline points="0,26 20,22 40,18 60,14 80,10 100,6 120,4" fill="none" stroke="#1DB87A" stroke-width="2"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="section-label reveal">How It Works</div>
+  <h2 class="section-title reveal">Three steps to<br><em>captured revenue</em></h2>
+  <div class="how-grid">
+    <div class="how-step reveal reveal-delay-1" data-step="1">
+      <div class="how-step-icon"><svg viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg></div>
+      <div class="how-step-num">Step 01</div>
+      <div class="how-step-title">Connect to your data</div>
+      <div class="how-step-desc">Safe-T-Net integrates with your existing EHR, billing system, and OR management software — no data migration, no downtime. Works with Epic, Cerner, Meditech, and others.</div>
+    </div>
+    <div class="how-step reveal reveal-delay-2" data-step="2">
+      <div class="how-step-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+      <div class="how-step-num">Step 02</div>
+      <div class="how-step-title">Safe-T-Net finds the gaps</div>
+      <div class="how-step-desc">Proprietary algorithms cross-reference procedure codes, documentation, and billing records to identify missed charges, undercoded procedures, and payer discrepancies in real time.</div>
+    </div>
+    <div class="how-step reveal reveal-delay-3" data-step="3">
+      <div class="how-step-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <div class="how-step-num">Step 03</div>
+      <div class="how-step-title">Your team acts on it</div>
+      <div class="how-step-desc">Every flagged item arrives as an actionable task — assigned to the right person, with the context they need to resolve it. Dashboards track recovery progress in real time.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+  <div>
+    <div class="section-label reveal">Platform Capabilities</div>
+    <h2 class="section-title reveal">Built for revenue<br><em>cycle teams</em></h2>
+    <p class="section-body reveal" style="margin-bottom:40px">Safe-T-Net is designed around one goal: getting your team the right information at the right moment.</p>
+    <div class="features-list reveal">
+      <div class="feature-item active" onclick="setFeature(this, 'realtime')">
+        <div class="feature-item-header"><div class="feature-item-title">Real-Time Opportunity Detection</div><div class="feature-item-icon"><svg viewBox="0 0 24 24"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div></div>
+        <div class="feature-item-desc">Flags missing charges within minutes of case closure — not days later when correction windows have closed. Integrates with OR scheduling to compare performed vs. billed procedures.</div>
+      </div>
+      <div class="feature-item" onclick="setFeature(this, 'analytics')">
+        <div class="feature-item-header"><div class="feature-item-title">Surgical Service Line Analytics</div><div class="feature-item-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div></div>
+        <div class="feature-item-desc">Drill into performance by service line, surgeon, OR, or payer. Identify which procedures have the highest correction rate and why — and track improvement over time.</div>
+      </div>
+      <div class="feature-item" onclick="setFeature(this, 'payer')">
+        <div class="feature-item-header"><div class="feature-item-title">Payer Performance Tracking</div><div class="feature-item-icon"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div></div>
+        <div class="feature-item-desc">Compare payer reimbursement rates against contractual obligations. Surface systematic underpayments across payers so your contracting team has evidence to act on.</div>
+      </div>
+      <div class="feature-item" onclick="setFeature(this, 'workflow')">
+        <div class="feature-item-header"><div class="feature-item-title">Workflow Task Management</div><div class="feature-item-icon"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div></div>
+        <div class="feature-item-desc">Converts every identified opportunity into a task — routed to the right team member with priority, context, and deadline. Tracks resolution and reopens items that slip through.</div>
+      </div>
+      <div class="feature-item" onclick="setFeature(this, 'reporting')">
+        <div class="feature-item-header"><div class="feature-item-title">Executive Reporting</div><div class="feature-item-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div></div>
+        <div class="feature-item-desc">One-click board-ready reports showing recovery totals, trend lines, and opportunity pipeline. Exports to PDF or integrates with your existing BI tooling.</div>
+      </div>
+    </div>
+  </div>
+  <div class="features-visual reveal reveal-delay-2">
+    <div class="features-visual-card" id="featureVisual">
+      <!-- Visual content changes based on selected feature -->
+      <div id="featureContent">
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--teal);font-weight:600;margin-bottom:20px">Real-Time Detection</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:6px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between">
+            <div><div style="font-size:13px;font-weight:600;color:var(--navy)">Robotic Hysterectomy — OR 4</div><div style="font-size:12px;color:var(--gray);margin-top:3px">Case closed 14 min ago · 3 items flagged</div></div>
+            <div style="background:#FEF3C7;color:#92400E;font-size:11px;font-weight:600;padding:4px 10px;border-radius:2px">$4,200</div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:6px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between">
+            <div><div style="font-size:13px;font-weight:600;color:var(--navy)">Laparoscopic Colectomy — OR 2</div><div style="font-size:12px;color:var(--gray);margin-top:3px">Case closed 1 hr ago · 1 item flagged</div></div>
+            <div style="background:#FEF3C7;color:#92400E;font-size:11px;font-weight:600;padding:4px 10px;border-radius:2px">$1,850</div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:6px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;opacity:.5">
+            <div><div style="font-size:13px;font-weight:600;color:var(--navy)">Robotic Prostatectomy — OR 1</div><div style="font-size:12px;color:var(--green);margin-top:3px">Resolved · $6,400 recovered</div></div>
+            <div style="background:#D1FAE5;color:#065F46;font-size:11px;font-weight:600;padding:4px 10px;border-radius:2px">✓ Done</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>See what Safe-T-Net<br>finds in <em>your system</em></h2>
+  <p>Most health systems discover meaningful recovery opportunities within the first 30 days. Request a demo and we'll show you exactly what's being missed.</p>
+  <div class="cta-actions">
+    <a href="index.html#contact" class="btn-primary">Request a Demo</a>
+    <a href="index.html#contact" class="btn-ghost">Talk to a Rep</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div><div class="footer-logo"><img src="https://www.ninomed.com/wp-content/uploads/2020/11/logo-2020.png" alt="NinoMed"/></div><p class="footer-tagline">NinoMed, LLC develops innovative medical device and analytics solutions that improve patient safety, OR efficiency, and health system revenue.</p></div>
+    <div><div class="footer-col-title">Products</div><ul class="footer-links"><li><a href="https://www.ninomed.com/safe-t-secure/" target="_blank">Safe-T-Secure®</a></li><li><a href="https://www.ninomed.com/sts-flex/" target="_blank">STS-BodyPad™ XL</a></li><li><a href="https://www.ninomed.com/sts-bodypad/" target="_blank">STS-BodyPad™ Regular</a></li><li><a href="https://www.ninomed.com/sts-head-to-toe/" target="_blank">Pluma-Soft Head-To-Toe™</a></li><li><a href="https://www.ninomed.com/pneumohub/" target="_blank">PneumoHub™</a></li></ul></div>
+    <div><div class="footer-col-title">Solutions</div><ul class="footer-links"><li><a href="index.html#products">Patient Positioners</a></li><li><a href="safe-t-net.html">Safe-T-Net™ Analytics</a></li><li><a href="https://www.ninomed.com/surgical-foam-positioners/" target="_blank">Surgical Foam</a></li></ul></div>
+    <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="about.html">About NinoMed</a></li><li><a href="https://www.ninomed.com/upcoming-events/" target="_blank">Upcoming Events</a></li><li><a href="https://www.ninomed.com/blog/" target="_blank">News</a></li><li><a href="index.html#contact">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><div class="footer-copy">© 2026 NinoMed, LLC. All rights reserved.</div><a href="https://www.ninomed.com/wp-content/uploads/2025/06/NinoMed_2025_catalog_8.pdf" class="footer-catalog" target="_blank">↓ 2026 Product Catalog</a></div>
+</footer>
+
+<script>
+  // Build revenue chart
+  const months = ['Jul','Aug','Sep','Oct','Nov','Dec'];
+  const values = [42,58,51,73,89,95];
+  const chart = document.getElementById('revenueChart');
+  const labels = document.getElementById('chartLabels');
+  values.forEach((v,i) => {
+    const bar = document.createElement('div');
+    bar.className = 'bar' + (i >= 4 ? ' highlight' : '');
+    bar.style.cssText = `height:${v}%;background:${i>=4?'#0899A8':'rgba(8,153,168,0.25)'};animation:barGrow 1s ${0.1+i*0.08}s both`;
+    chart.appendChild(bar);
+  });
+  months.forEach(m => {
+    const label = document.createElement('div');
+    label.className = 'chart-x-label';
+    label.textContent = m;
+    labels.appendChild(label);
+  });
+
+  // Feature toggle
+  const featureData = {
+    realtime: {
+      title: 'Real-Time Detection',
+      content: `<div style="display:flex;flex-direction:column;gap:12px">
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:6px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:600;color:var(--navy)">Robotic Hysterectomy — OR 4</div><div style="font-size:12px;color:var(--gray);margin-top:3px">Case closed 14 min ago · 3 items flagged</div></div><div style="background:#FEF3C7;color:#92400E;font-size:11px;font-weight:600;padding:4px 10px;border-radius:2px">$4,200</div></div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:6px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:600;color:var(--navy)">Laparoscopic Colectomy — OR 2</div><div style="font-size:12px;color:var(--gray);margin-top:3px">Case closed 1 hr ago · 1 item flagged</div></div><div style="background:#FEF3C7;color:#92400E;font-size:11px;font-weight:600;padding:4px 10px;border-radius:2px">$1,850</div></div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:6px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;opacity:.5"><div><div style="font-size:13px;font-weight:600;color:var(--navy)">Robotic Prostatectomy — OR 1</div><div style="font-size:12px;color:#1DB87A;margin-top:3px">Resolved · $6,400 recovered</div></div><div style="background:#D1FAE5;color:#065F46;font-size:11px;font-weight:600;padding:4px 10px;border-radius:2px">✓ Done</div></div>
+      </div>`
+    },
+    analytics: {
+      title: 'Service Line Analytics',
+      content: `<div style="display:flex;flex-direction:column;gap:16px">
+        ${[['Gynecologic','$284k','↑18%'],['Urologic','$196k','↑32%'],['Colorectal','$142k','↑11%'],['General Surgery','$88k','↑24%']].map(([name,val,trend])=>`
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px">
+          <div style="font-size:13px;font-weight:600;color:var(--navy);min-width:120px">${name}</div>
+          <div style="flex:1;background:var(--border);height:6px;border-radius:3px;overflow:hidden"><div style="height:100%;background:var(--teal);border-radius:3px;width:${Math.random()*50+40}%"></div></div>
+          <div style="font-size:13px;font-weight:600;color:var(--navy);min-width:52px;text-align:right">${val}</div>
+          <div style="font-size:11px;font-weight:600;color:#1DB87A;min-width:40px">${trend}</div>
+        </div>`).join('')}
+      </div>`
+    },
+    payer: {
+      title: 'Payer Performance',
+      content: `<div style="display:flex;flex-direction:column;gap:12px">
+        ${[['BlueCross BCBS','98.2%','On target'],['Medicare','94.7%','$12k gap'],['United Health','91.3%','$28k gap'],['Aetna','88.1%','$41k gap']].map(([name,rate,note])=>`
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:6px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between">
+          <div style="font-size:13px;font-weight:600;color:var(--navy)">${name}</div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="font-size:13px;font-weight:600;color:${parseFloat(rate)>95?'#1DB87A':parseFloat(rate)>90?'#F5A623':'#F56565'}">${rate}</div>
+            <div style="font-size:11px;color:var(--gray)">${note}</div>
+          </div>
+        </div>`).join('')}
+      </div>`
+    },
+    workflow: {
+      title: 'Task Management',
+      content: `<div style="display:flex;flex-direction:column;gap:10px">
+        ${[['High','Charge entry missing — Lap Chole OR3','$2,400','Due today'],['High','Modifier dispute — United, Claim 88201','$1,200','Due today'],['Med','Documentation gap — Cystoscopy','$680','Due tomorrow'],['Low','Payer audit request — BCBS 12 claims','$8,400','Due Friday']].map(([pri,task,val,due])=>`
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:6px;padding:12px 16px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:2px;background:${pri==='High'?'#FEE2E2':pri==='Med'?'#FEF3C7':'#F0FDF4'};color:${pri==='High'?'#991B1B':pri==='Med'?'#92400E':'#166534'}">${pri}</span>
+            <span style="font-size:13px;font-weight:500;color:var(--navy)">${task}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:var(--gray)">${due}</span><span style="font-size:12px;font-weight:600;color:var(--teal)">${val}</span></div>
+        </div>`).join('')}
+      </div>`
+    },
+    reporting: {
+      title: 'Executive Reporting',
+      content: `<div style="text-align:center;padding:20px 0">
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--teal);font-weight:600;margin-bottom:24px">Q2 2026 — Board Summary</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+          <div style="background:var(--off-wh);border:1px solid var(--border);border-radius:6px;padding:20px"><div style="font-family:'Fraunces',serif;font-size:28px;color:var(--navy)">$1.28M</div><div style="font-size:12px;color:var(--gray);margin-top:4px">Revenue recovered</div></div>
+          <div style="background:var(--off-wh);border:1px solid var(--border);border-radius:6px;padding:20px"><div style="font-family:'Fraunces',serif;font-size:28px;color:var(--navy)">94.3%</div><div style="font-size:12px;color:var(--gray);margin-top:4px">Charge capture rate</div></div>
+        </div>
+        <div style="background:var(--navy);color:white;border-radius:4px;padding:10px 20px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px;cursor:pointer">↓ Export PDF Report</div>
+      </div>`
+    }
+  };
+
+  function setFeature(el, key) {
+    document.querySelectorAll('.feature-item').forEach(f => f.classList.remove('active'));
+    el.classList.add('active');
+    const data = featureData[key];
+    document.getElementById('featureContent').innerHTML = `
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--teal);font-weight:600;margin-bottom:20px">${data.title}</div>
+      ${data.content}
+    `;
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)} });
+  }, {threshold: .1});
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Nav button tabs
+  document.querySelectorAll('.dash-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.dash-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+  function closeMenu(){document.getElementById('mobileMenu').classList.remove('open')}
+</script>
+</body>
+</html>
