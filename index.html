@@ -86,9 +86,9 @@
     .social-proof{background:var(--white);padding:56px 80px;border-bottom:1px solid var(--border)}
     .social-proof-label{text-align:center;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-bottom:36px}
     .logos-row{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap}
-    .hospital-logo{opacity:.32;transition:opacity .25s;display:flex;align-items:center;color:var(--navy)}
-    .hospital-logo:hover{opacity:.6}
-    .hospital-logo svg{height:26px}
+    .hospital-logo{opacity:.28;transition:opacity .3s;display:flex;align-items:center;filter:grayscale(1)}
+    .hospital-logo:hover{opacity:.55}
+    .hospital-logo svg{height:36px}
 
     /* FEATURE */
     .feature-section{background:var(--navy);padding:100px 80px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;overflow:hidden}
@@ -243,7 +243,7 @@
   <ul class="nav-links">
     <li><a href="#products">Products</a></li>
     <li><a href="#pneumohub">PneumoHub</a></li>
-    <li><a href="safe-t-net.html">Safe-T-Net</a></li>
+    <li><a href="or-analytics.html">OR Analytics</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="#contact" class="nav-cta">Contact Us</a></li>
   </ul>
@@ -252,7 +252,7 @@
 <div class="mobile-menu" id="mobileMenu">
   <a href="#products" onclick="closeMenu()">Products</a>
   <a href="#pneumohub" onclick="closeMenu()">PneumoHub</a>
-  <a href="safe-t-net.html" onclick="closeMenu()">Safe-T-Net</a>
+  <a href="or-analytics.html" onclick="closeMenu()">OR Analytics</a>
   <a href="about.html" onclick="closeMenu()">About</a>
   <a href="#contact" onclick="closeMenu()">Contact Us</a>
 </div>
@@ -304,11 +304,50 @@
 <div class="social-proof reveal">
   <div class="social-proof-label">Trusted at leading academic medical centers &amp; health systems</div>
   <div class="logos-row">
-    <div class="hospital-logo"><svg viewBox="0 0 190 36" xmlns="http://www.w3.org/2000/svg"><text y="28" font-family="Georgia,serif" font-size="27" font-weight="700" fill="currentColor">Duke Health</text></svg></div>
-    <div class="hospital-logo"><svg viewBox="0 0 180 36" xmlns="http://www.w3.org/2000/svg"><text y="28" font-family="Georgia,serif" font-size="27" font-weight="700" fill="currentColor">UNC Health</text></svg></div>
-    <div class="hospital-logo"><svg viewBox="0 0 225 36" xmlns="http://www.w3.org/2000/svg"><text y="28" font-family="Georgia,serif" font-size="27" font-weight="700" fill="currentColor">Penn Medicine</text></svg></div>
-    <div class="hospital-logo"><svg viewBox="0 0 215 36" xmlns="http://www.w3.org/2000/svg"><text y="28" font-family="Georgia,serif" font-size="27" font-weight="700" fill="currentColor">NYU Langone</text></svg></div>
-    <div class="hospital-logo"><svg viewBox="0 0 280 36" xmlns="http://www.w3.org/2000/svg"><text y="28" font-family="Georgia,serif" font-size="23" font-weight="700" fill="currentColor">Mount Auburn Hospital</text></svg></div>
+    <!-- Duke Health -->
+    <div class="hospital-logo">
+      <svg viewBox="0 0 160 44" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="4" width="6" height="36" fill="#00539B"/>
+        <text x="14" y="21" font-family="'Times New Roman',Times,serif" font-size="15" font-weight="700" fill="#00539B" letter-spacing="1">DUKE</text>
+        <text x="14" y="38" font-family="'Times New Roman',Times,serif" font-size="13" fill="#00539B" letter-spacing="0.5">HEALTH</text>
+      </svg>
+    </div>
+    <!-- UNC Health -->
+    <div class="hospital-logo">
+      <svg viewBox="0 0 170 44" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="20" font-family="'Arial',sans-serif" font-size="22" font-weight="900" fill="#4B9CD3" letter-spacing="-0.5">UNC</text>
+        <text x="0" y="39" font-family="'Arial',sans-serif" font-size="13" font-weight="600" fill="#13294B" letter-spacing="2.5">HEALTH</text>
+      </svg>
+    </div>
+    <!-- Penn Medicine -->
+    <div class="hospital-logo">
+      <svg viewBox="0 0 200 44" xmlns="http://www.w3.org/2000/svg">
+        <!-- Penn shield simplified -->
+        <path d="M8,4 L22,4 L22,24 Q15,30 8,24 Z" fill="#011F5B" opacity="0.9"/>
+        <text x="5" y="21" font-family="'Times New Roman',serif" font-size="11" font-weight="700" fill="white">P</text>
+        <text x="30" y="20" font-family="'Times New Roman',Times,serif" font-size="15" font-weight="700" fill="#011F5B" letter-spacing="0.3">PENN</text>
+        <text x="30" y="36" font-family="'Times New Roman',Times,serif" font-size="11" fill="#011F5B" letter-spacing="1.5">MEDICINE</text>
+      </svg>
+    </div>
+    <!-- NYU Langone -->
+    <div class="hospital-logo">
+      <svg viewBox="0 0 195 44" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="40" height="44" fill="#57068C"/>
+        <text x="5" y="29" font-family="'Arial',sans-serif" font-size="19" font-weight="900" fill="white">NYU</text>
+        <text x="48" y="19" font-family="'Arial',sans-serif" font-size="13" font-weight="700" fill="#57068C" letter-spacing="0.3">Langone</text>
+        <text x="48" y="36" font-family="'Arial',sans-serif" font-size="11" fill="#333" letter-spacing="0.5">Health</text>
+      </svg>
+    </div>
+    <!-- Mount Auburn Hospital -->
+    <div class="hospital-logo">
+      <svg viewBox="0 0 220 44" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="22" r="8" fill="none" stroke="#005587" stroke-width="2"/>
+        <line x1="10" y1="14" x2="10" y2="30" stroke="#005587" stroke-width="1.5"/>
+        <line x1="6" y1="18" x2="14" y2="18" stroke="#005587" stroke-width="1.5"/>
+        <text x="26" y="18" font-family="'Times New Roman',Times,serif" font-size="12" font-weight="700" fill="#005587" letter-spacing="0.3">Mount Auburn</text>
+        <text x="26" y="34" font-family="'Times New Roman',Times,serif" font-size="11" fill="#005587" letter-spacing="0.5">Hospital</text>
+      </svg>
+    </div>
   </div>
 </div>
 
@@ -390,14 +429,14 @@
   </div>
   <div class="analytics-right reveal reveal-delay-2">
     <div class="section-label" style="color:var(--teal-lt)"><span style="width:24px;height:1px;background:var(--teal-lt);display:inline-block;margin-right:10px"></span>Business Analytics</div>
-    <h2 class="section-title" style="color:var(--white)">Safe-T-Net™<br><em>Revenue</em> you're missing</h2>
+    <h2 class="section-title" style="color:var(--white)">OR Analytics™<br><em>Revenue</em> you're missing</h2>
     <p class="section-body" style="color:rgba(255,255,255,.55)">A business analytics platform that finds and recovers billing opportunities standard EHRs and billing systems simply can't see.</p>
     <div class="analytics-cards">
       <div class="analytics-card"><div class="analytics-card-num">01</div><div><div class="analytics-card-title">Revenue Cycle Management</div><div class="analytics-card-desc">Identifies lost billing opportunities in real time across your surgical service lines.</div></div></div>
       <div class="analytics-card"><div class="analytics-card-num">02</div><div><div class="analytics-card-title">Actionable Performance Data</div><div class="analytics-card-desc">Dashboards your team can actually act on — not just report on.</div></div></div>
       <div class="analytics-card"><div class="analytics-card-num">03</div><div><div class="analytics-card-title">EHR-Agnostic</div><div class="analytics-card-desc">Works alongside your existing EHR. No rip-and-replace required.</div></div></div>
     </div>
-    <a href="safe-t-net.html" class="btn-primary" style="margin-top:32px;display:inline-flex">Full Safe-T-Net Details</a>
+    <a href="or-analytics.html" class="btn-primary" style="margin-top:32px;display:inline-flex">Full OR Analytics Details</a>
   </div>
 </section>
 
@@ -429,7 +468,7 @@
       <div class="form-group"><label>Email</label><input type="email" placeholder="jane@hospital.org"/></div>
       <div class="form-group"><label>Phone</label><input type="tel" placeholder="(555) 000-0000"/></div>
       <div class="form-group"><label>Company / Hospital</label><input type="text" placeholder="Memorial General Hospital"/></div>
-      <div class="form-group"><label>Product Interest</label><select><option value="">Select a product</option><option>Safe-T-Secure®</option><option>STS-BodyPad™</option><option>Pluma-Soft Head-To-Toe™</option><option>PneumoHub™</option><option>Safe-T-Net™</option><option>Cush-In It™</option><option>General Inquiry</option></select></div>
+      <div class="form-group"><label>Product Interest</label><select><option value="">Select a product</option><option>Safe-T-Secure®</option><option>STS-BodyPad™</option><option>Pluma-Soft Head-To-Toe™</option><option>PneumoHub™</option><option>OR Analytics™</option><option>Cush-In It™</option><option>General Inquiry</option></select></div>
       <div class="form-group"><label>Message</label><textarea placeholder="Tell us how we can help..."></textarea></div>
       <button class="form-submit" onclick="handleSubmit(event)">Send Message →</button>
     </div>
@@ -440,7 +479,7 @@
   <div class="footer-top">
     <div><div class="footer-logo"><img src="https://www.ninomed.com/wp-content/uploads/2020/11/logo-2020.png" alt="NinoMed"/></div><p class="footer-tagline">NinoMed, LLC develops innovative medical device and analytics solutions that improve patient safety, OR efficiency, and health system revenue.</p></div>
     <div><div class="footer-col-title">Products</div><ul class="footer-links"><li><a href="https://www.ninomed.com/safe-t-secure/" target="_blank">Safe-T-Secure®</a></li><li><a href="https://www.ninomed.com/sts-flex/" target="_blank">STS-BodyPad™ XL</a></li><li><a href="https://www.ninomed.com/sts-bodypad/" target="_blank">STS-BodyPad™ Regular</a></li><li><a href="https://www.ninomed.com/sts-head-to-toe/" target="_blank">Pluma-Soft Head-To-Toe™</a></li><li><a href="https://www.ninomed.com/pneumohub/" target="_blank">PneumoHub™</a></li></ul></div>
-    <div><div class="footer-col-title">Solutions</div><ul class="footer-links"><li><a href="https://www.ninomed.com/positioning-devices/" target="_blank">Patient Positioners</a></li><li><a href="safe-t-net.html">Safe-T-Net™ Analytics</a></li><li><a href="https://www.ninomed.com/surgical-foam-positioners/" target="_blank">Surgical Foam</a></li><li><a href="https://www.ninomed.com/product/cush-in-it-iv-wrap-variety-pack/" target="_blank">Cush-In It™</a></li></ul></div>
+    <div><div class="footer-col-title">Solutions</div><ul class="footer-links"><li><a href="https://www.ninomed.com/positioning-devices/" target="_blank">Patient Positioners</a></li><li><a href="or-analytics.html">OR Analytics™ Analytics</a></li><li><a href="https://www.ninomed.com/surgical-foam-positioners/" target="_blank">Surgical Foam</a></li><li><a href="https://www.ninomed.com/product/cush-in-it-iv-wrap-variety-pack/" target="_blank">Cush-In It™</a></li></ul></div>
     <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="about.html">About NinoMed</a></li><li><a href="https://www.ninomed.com/upcoming-events/" target="_blank">Upcoming Events</a></li><li><a href="https://www.ninomed.com/blog/" target="_blank">News</a></li><li><a href="#contact">Contact</a></li><li><a href="https://www.ninomed.com/shop/" target="_blank">Shop</a></li></ul></div>
   </div>
   <div class="footer-bottom"><div class="footer-copy">© 2026 NinoMed, LLC. All rights reserved.</div><a href="https://www.ninomed.com/wp-content/uploads/2025/06/NinoMed_2025_catalog_8.pdf" class="footer-catalog" target="_blank">↓ 2026 Product Catalog</a></div>
