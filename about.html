@@ -10,75 +10,69 @@
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
-      --navy:#0B1F35;--navy-mid:#122840;--teal:#0899A8;--teal-lt:#0ABCCE;
-      --white:#FFFFFF;--off-wh:#F2F6F8;--gray:#8A9BAB;--text:#1C2B3A;--border:#D6E3EC;
+      --teal:#00A5BB;--teal-lt:#2DC4D8;--teal-dk:#007A8C;--teal-pale:#E5F6F9;
+      --ink:#0A3E49;--ink-soft:#1F5868;
+      --white:#FFFFFF;--off-wh:#F6FAFB;--gray:#7A8E96;--border:#DCE8EC;
       --font-display:'Fraunces',Georgia,serif;--font-body:'DM Sans',system-ui,sans-serif;
       --ease:cubic-bezier(0.25,0.46,0.45,0.94);
     }
     html{scroll-behavior:smooth}
-    body{font-family:var(--font-body);color:var(--text);background:var(--white);overflow-x:hidden}
+    body{font-family:var(--font-body);color:var(--ink);background:var(--white);overflow-x:hidden}
 
-    /* NAV */
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 64px;display:flex;align-items:center;justify-content:space-between;height:72px;background:rgba(11,31,53,.97);backdrop-filter:blur(12px);box-shadow:0 1px 0 rgba(255,255,255,.06)}
-    .nav-logo img{height:34px;filter:brightness(0) invert(1)}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 64px;display:flex;align-items:center;justify-content:space-between;height:72px;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+    .nav-logo img{height:36px}
     .nav-links{display:flex;gap:36px;list-style:none;align-items:center}
-    .nav-links a{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.7);text-decoration:none;transition:color .2s}
-    .nav-links a:hover,.nav-links a.active{color:var(--white)}
-    .nav-cta{color:var(--white)!important;border:1px solid rgba(255,255,255,.35);padding:9px 22px;border-radius:2px;transition:background .2s,border-color .2s!important}
-    .nav-cta:hover{background:var(--teal)!important;border-color:var(--teal)!important}
+    .nav-links a{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;transition:color .2s}
+    .nav-links a:hover,.nav-links a.active{color:var(--teal)}
+    .nav-cta{color:var(--white)!important;background:var(--teal);padding:9px 22px;border-radius:2px;transition:background .2s!important}
+    .nav-cta:hover{background:var(--teal-dk)!important}
     .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
-    .nav-hamburger span{width:24px;height:2px;background:white;display:block}
-    .mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;z-index:99;background:var(--navy);padding:24px 32px 32px;flex-direction:column;gap:20px}
+    .nav-hamburger span{width:24px;height:2px;background:var(--ink);display:block}
+    .mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;z-index:99;background:var(--white);padding:24px 32px 32px;flex-direction:column;gap:20px;border-bottom:1px solid var(--border)}
     .mobile-menu.open{display:flex}
-    .mobile-menu a{color:rgba(255,255,255,.8);text-decoration:none;font-size:15px;font-weight:500}
+    .mobile-menu a{color:var(--ink);text-decoration:none;font-size:15px;font-weight:500}
 
-    /* HERO */
-    .page-hero{background:var(--navy);padding:140px 80px 100px;position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-    .page-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(8,153,168,.15) 1px,transparent 1px);background-size:36px 36px;opacity:.5;pointer-events:none}
-    .page-hero::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:80px;background:linear-gradient(to bottom,transparent,var(--white));pointer-events:none}
+    .page-hero{background:var(--white);padding:140px 80px 100px;position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .page-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(0,165,187,.08) 1px,transparent 1px);background-size:36px 36px;opacity:.7;pointer-events:none}
+    .page-hero::after{content:'';position:absolute;top:-150px;right:-150px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(45,196,216,.12),transparent 70%);pointer-events:none}
     .hero-left{position:relative;z-index:2}
-    .breadcrumb{display:flex;align-items:center;gap:8px;margin-bottom:24px;font-size:12px;color:rgba(255,255,255,.4)}
-    .breadcrumb a{color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
-    .breadcrumb a:hover{color:var(--teal-lt)}
-    .breadcrumb span{color:rgba(255,255,255,.2)}
+    .breadcrumb{display:flex;align-items:center;gap:8px;margin-bottom:24px;font-size:12px;color:var(--gray)}
+    .breadcrumb a{color:var(--ink-soft);text-decoration:none;transition:color .2s}
+    .breadcrumb a:hover{color:var(--teal)}
     .hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:20px;display:flex;align-items:center;gap:10px}
     .hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--teal)}
-    .page-hero h1{font-family:var(--font-display);font-size:clamp(38px,4.5vw,62px);font-weight:300;line-height:1.1;color:var(--white);margin-bottom:24px}
-    .page-hero h1 em{font-style:italic;color:var(--teal-lt)}
-    .page-hero-desc{font-size:17px;line-height:1.75;color:rgba(255,255,255,.55);max-width:520px}
+    .page-hero h1{font-family:var(--font-display);font-size:clamp(38px,4.5vw,62px);font-weight:300;line-height:1.1;color:var(--ink);margin-bottom:24px}
+    .page-hero h1 em{font-style:italic;color:var(--teal)}
+    .page-hero-desc{font-size:17px;line-height:1.75;color:var(--ink-soft);max-width:520px}
     .hero-right{position:relative;z-index:2;display:flex;flex-direction:column;gap:16px}
-    .mission-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:28px 32px}
-    .mission-card-label{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-lt);margin-bottom:12px}
-    .mission-card-text{font-family:var(--font-display);font-size:18px;font-style:italic;color:var(--white);line-height:1.6;font-weight:300}
+    .mission-card{background:var(--off-wh);border:1px solid var(--border);border-radius:8px;padding:28px 32px}
+    .mission-card-label{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+    .mission-card-text{font-family:var(--font-display);font-size:18px;font-style:italic;color:var(--ink);line-height:1.6;font-weight:300}
 
-    /* SECTIONS */
     section{padding:100px 80px}
     .section-label{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-bottom:16px}
     .section-label::before{content:'';width:24px;height:1px;background:var(--teal)}
-    .section-title{font-family:var(--font-display);font-size:clamp(30px,3.5vw,46px);font-weight:300;line-height:1.15;color:var(--navy);margin-bottom:20px}
+    .section-title{font-family:var(--font-display);font-size:clamp(30px,3.5vw,46px);font-weight:300;line-height:1.15;color:var(--ink);margin-bottom:20px}
     .section-title em{font-style:italic;color:var(--teal)}
-    .section-body{font-size:16px;line-height:1.75;color:#5A7080;max-width:560px}
+    .section-body{font-size:16px;line-height:1.75;color:var(--ink-soft);max-width:560px}
     .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
     .reveal.visible{opacity:1;transform:none}
     .reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}
 
-    /* STORY */
     .story-section{background:var(--white);padding:100px 80px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-    .story-img{border-radius:8px;overflow:hidden}
+    .story-img{border-radius:8px;overflow:hidden;box-shadow:0 20px 60px rgba(10,62,73,.08)}
     .story-img img{width:100%;display:block;object-fit:cover}
-    .story-body p{font-size:16px;line-height:1.85;color:#4A6070;margin-bottom:20px}
+    .story-body p{font-size:16px;line-height:1.85;color:var(--ink-soft);margin-bottom:20px}
 
-    /* VALUES */
-    .values-section{background:var(--off-wh);padding:100px 80px}
+    .values-section{background:var(--off-wh);padding:100px 80px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
     .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
     .value-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:36px;transition:border-color .3s,box-shadow .3s}
-    .value-card:hover{border-color:var(--teal);box-shadow:0 12px 40px rgba(11,31,53,.08)}
-    .value-icon{width:48px;height:48px;background:rgba(8,153,168,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+    .value-card:hover{border-color:var(--teal);box-shadow:0 12px 40px rgba(10,62,73,.08)}
+    .value-icon{width:48px;height:48px;background:var(--teal-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
     .value-icon svg{width:22px;height:22px;stroke:var(--teal);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-    .value-title{font-family:var(--font-display);font-size:22px;font-weight:400;color:var(--navy);margin-bottom:12px}
-    .value-desc{font-size:14px;line-height:1.7;color:var(--gray)}
+    .value-title{font-family:var(--font-display);font-size:22px;font-weight:400;color:var(--ink);margin-bottom:12px}
+    .value-desc{font-size:14px;line-height:1.7;color:var(--ink-soft)}
 
-    /* TIMELINE */
     .timeline-section{background:var(--white);padding:100px 80px}
     .timeline{position:relative;margin-top:56px;padding-left:48px}
     .timeline::before{content:'';position:absolute;left:8px;top:8px;bottom:8px;width:2px;background:var(--border)}
@@ -86,39 +80,38 @@
     .timeline-item::before{content:'';position:absolute;left:-44px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--white);border:2px solid var(--teal);transition:background .3s}
     .timeline-item:hover::before{background:var(--teal)}
     .timeline-year{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
-    .timeline-title{font-family:var(--font-display);font-size:20px;font-weight:400;color:var(--navy);margin-bottom:8px}
-    .timeline-desc{font-size:14px;line-height:1.7;color:var(--gray);max-width:580px}
+    .timeline-title{font-family:var(--font-display);font-size:20px;font-weight:400;color:var(--ink);margin-bottom:8px}
+    .timeline-desc{font-size:14px;line-height:1.7;color:var(--ink-soft);max-width:580px}
 
-    /* TEAM */
-    .team-strip{background:var(--navy);padding:80px;display:flex;align-items:center;justify-content:space-between;gap:48px;flex-wrap:wrap}
+    .team-strip{background:var(--ink);padding:80px;display:flex;align-items:center;justify-content:space-between;gap:48px;flex-wrap:wrap;position:relative;overflow:hidden}
+    .team-strip::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(45,196,216,.1) 1px,transparent 1px);background-size:36px 36px;opacity:.5;pointer-events:none}
+    .team-left{position:relative;z-index:2}
     .team-left h2{font-family:var(--font-display);font-size:clamp(28px,3.5vw,42px);font-weight:300;color:var(--white);line-height:1.2;margin-bottom:12px}
     .team-left h2 em{font-style:italic;color:var(--teal-lt)}
-    .team-left p{font-size:16px;color:rgba(255,255,255,.5);max-width:480px;line-height:1.7}
-    .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:var(--white);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:15px 32px;border-radius:2px;transition:background .25s var(--ease),transform .2s}
+    .team-left p{font-size:16px;color:rgba(255,255,255,.7);max-width:480px;line-height:1.7}
+    .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:var(--white);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:15px 32px;border-radius:2px;transition:background .25s var(--ease),transform .2s;position:relative;z-index:2}
     .btn-primary:hover{background:var(--teal-lt);transform:translateY(-1px)}
 
-    /* CERTIFICATIONS */
     .certs-section{background:var(--off-wh);padding:60px 80px;border-top:1px solid var(--border)}
     .certs-label{text-align:center;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-bottom:36px}
     .certs-row{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap}
-    .cert-item{text-align:center;opacity:.55;transition:opacity .25s;cursor:default}
-    .cert-item:hover{opacity:.85}
-    .cert-name{font-size:14px;font-weight:700;color:var(--navy);letter-spacing:.04em}
+    .cert-item{text-align:center;opacity:.7;transition:opacity .25s}
+    .cert-item:hover{opacity:1}
+    .cert-name{font-size:14px;font-weight:700;color:var(--ink);letter-spacing:.04em}
     .cert-sub{font-size:11px;color:var(--gray);margin-top:4px}
 
-    /* FOOTER */
-    footer{background:#060F1A;padding:60px 80px 40px}
+    footer{background:var(--ink);padding:60px 80px 40px}
     .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
-    .footer-logo img{height:30px;filter:brightness(0) invert(1);opacity:.6;margin-bottom:16px}
-    .footer-tagline{font-size:13px;color:rgba(255,255,255,.38);line-height:1.7;max-width:280px}
-    .footer-col-title{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:16px}
+    .footer-logo img{height:30px;filter:brightness(0) invert(1);opacity:.85;margin-bottom:16px}
+    .footer-tagline{font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;max-width:280px}
+    .footer-col-title{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:16px}
     .footer-links{list-style:none;display:flex;flex-direction:column;gap:10px}
-    .footer-links a{font-size:13px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
+    .footer-links a{font-size:13px;color:rgba(255,255,255,.65);text-decoration:none;transition:color .2s}
     .footer-links a:hover{color:var(--teal-lt)}
-    .footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:28px;display:flex;justify-content:space-between;align-items:center}
-    .footer-copy{font-size:12px;color:rgba(255,255,255,.28)}
-    .footer-catalog{font-size:12px;font-weight:600;color:var(--teal);text-decoration:none}
-    .footer-catalog:hover{color:var(--teal-lt)}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:28px;display:flex;justify-content:space-between;align-items:center}
+    .footer-copy{font-size:12px;color:rgba(255,255,255,.4)}
+    .footer-catalog{font-size:12px;font-weight:600;color:var(--teal-lt);text-decoration:none}
+    .footer-catalog:hover{color:var(--white)}
 
     @media(max-width:1024px){
       section{padding:80px 40px}
@@ -175,12 +168,11 @@
     </div>
     <div class="mission-card">
       <div class="mission-card-label">Headquarters</div>
-      <div style="font-size:15px;color:rgba(255,255,255,.7);line-height:1.6">224 Harrison St, Ste. 306<br>Syracuse, NY 13202<br><br><a href="tel:9198183711" style="color:var(--teal-lt);text-decoration:none">(919) 818-3711</a></div>
+      <div style="font-size:15px;color:var(--ink-soft);line-height:1.6">224 Harrison St, Ste. 306<br>Syracuse, NY 13202<br><br><a href="tel:9198183711" style="color:var(--teal);text-decoration:none;font-weight:600">(919) 818-3711</a></div>
     </div>
   </div>
 </div>
 
-<!-- STORY -->
 <section class="story-section">
   <div class="story-img reveal">
     <img src="https://www.ninomed.com/wp-content/uploads/2026/04/STS-and-STS-Body-Pad-120-Day-Biodegradability-copy-1024x578.webp" alt="NinoMed Products"/>
@@ -196,7 +188,6 @@
   </div>
 </section>
 
-<!-- VALUES -->
 <section class="values-section">
   <div class="section-label reveal">What Drives Us</div>
   <h2 class="section-title reveal">Three things we<br><em>don't compromise</em> on</h2>
@@ -219,7 +210,6 @@
   </div>
 </section>
 
-<!-- TIMELINE -->
 <section class="timeline-section">
   <div class="section-label reveal">Company History</div>
   <h2 class="section-title reveal">From one idea<br>to a full <em>platform</em></h2>
@@ -236,7 +226,7 @@
     </div>
     <div class="timeline-item">
       <div class="timeline-year">2019</div>
-      <div class="timeline-title">OR Analytics™ business analytics platform</div>
+      <div class="timeline-title">OR Analytics™ business intelligence</div>
       <div class="timeline-desc">NinoMed expands beyond medical devices with OR Analytics™ — a revenue cycle analytics platform designed to help health systems identify and recover billing opportunities that standard EHRs miss.</div>
     </div>
     <div class="timeline-item">
@@ -252,7 +242,6 @@
   </div>
 </section>
 
-<!-- CERTIFICATIONS -->
 <div class="certs-section reveal">
   <div class="certs-label">Standards &amp; Compliance</div>
   <div class="certs-row">
@@ -264,7 +253,6 @@
   </div>
 </div>
 
-<!-- TEAM CTA -->
 <div class="team-strip">
   <div class="team-left">
     <h2>Ready to see NinoMed<br>in <em>your facility?</em></h2>
@@ -275,9 +263,9 @@
 
 <footer>
   <div class="footer-top">
-    <div><div class="footer-logo"><img src="https://www.ninomed.com/wp-content/uploads/2020/11/logo-2020.png" alt="NinoMed"/></div><p class="footer-tagline">NinoMed, LLC develops innovative medical device and analytics solutions that improve patient safety, OR efficiency, and health system revenue.</p></div>
+    <div><div style="margin-bottom:16px"><img src="https://www.ninomed.com/wp-content/uploads/2020/11/logo-2020.png" alt="NinoMed" style="height:30px;filter:brightness(0) invert(1);opacity:.85"/></div><p class="footer-tagline">NinoMed, LLC develops innovative medical device and analytics solutions that improve patient safety, OR efficiency, and health system revenue.</p></div>
     <div><div class="footer-col-title">Products</div><ul class="footer-links"><li><a href="https://www.ninomed.com/safe-t-secure/" target="_blank">Safe-T-Secure®</a></li><li><a href="https://www.ninomed.com/sts-flex/" target="_blank">STS-BodyPad™ XL</a></li><li><a href="https://www.ninomed.com/sts-bodypad/" target="_blank">STS-BodyPad™ Regular</a></li><li><a href="https://www.ninomed.com/sts-head-to-toe/" target="_blank">Pluma-Soft Head-To-Toe™</a></li><li><a href="https://www.ninomed.com/pneumohub/" target="_blank">PneumoHub™</a></li></ul></div>
-    <div><div class="footer-col-title">Solutions</div><ul class="footer-links"><li><a href="index.html#products">Patient Positioners</a></li><li><a href="or-analytics.html">OR Analytics™ Analytics</a></li><li><a href="https://www.ninomed.com/surgical-foam-positioners/" target="_blank">Surgical Foam</a></li></ul></div>
+    <div><div class="footer-col-title">Solutions</div><ul class="footer-links"><li><a href="index.html#products">Patient Positioners</a></li><li><a href="or-analytics.html">OR Analytics™</a></li><li><a href="https://www.ninomed.com/surgical-foam-positioners/" target="_blank">Surgical Foam</a></li></ul></div>
     <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="about.html">About NinoMed</a></li><li><a href="https://www.ninomed.com/upcoming-events/" target="_blank">Upcoming Events</a></li><li><a href="https://www.ninomed.com/blog/" target="_blank">News</a></li><li><a href="index.html#contact">Contact</a></li></ul></div>
   </div>
   <div class="footer-bottom"><div class="footer-copy">© 2026 NinoMed, LLC. All rights reserved.</div><a href="https://www.ninomed.com/wp-content/uploads/2025/06/NinoMed_2025_catalog_8.pdf" class="footer-catalog" target="_blank">↓ 2026 Product Catalog</a></div>
